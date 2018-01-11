@@ -1,5 +1,4 @@
-package algorithms;
-
+import bc.*;
 import java.util.PriorityQueue;
 import java.lang.Math;
 
@@ -8,33 +7,35 @@ import java.lang.Math;
  * 
  * @author virsain
  */
-public class PlanetMap {
-	
-	/* A grid of integers representing a planet
-	 * 0 represents an empty tile
-	 * 1 represents a water tile
-	 * 2 represents a Karbonite site
-	 */
-	public int map[][];
+public class BattleMap implements Map {
 	
 	// the map represented as a grid of TileNodes
 	public TileNode tileNodeMap[][];
 	
+	int height; // height of the map
+	int width;  // width of the map
+	Planet planet;
+	
 	/**
 	 * Creates a new Map
 	 */
-	public PlanetMap() {
-		
+	public BattleMap(PlanetMap planetMap) {
+		planet = planetMap.getPlanet();
+		height = (int) planetMap.getHeight();
+		width = (int) planetMap.getWidth();
+		tileNodeMap = new TileNode[height][width];
+
+		long startTime = System.nanoTime();
+		makeGrid(planetMap);
+		long endTime = System.nanoTime();
+		System.out.println((endTime-startTime)/1000000.0);
 	}
 	
 	/**
 	 * Initializes the TileNodes and creates edges to their
 	 * neighboring TileNodes.
 	 */
-	public void makeGraph() {
-		int height = tileNodeMap.length;
-		int width = tileNodeMap[0].length;
-		
+	public void makeGrid(PlanetMap planetMap) {
 		// iterate through each tile and initialize it
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
@@ -42,9 +43,22 @@ public class PlanetMap {
 				
 				// something at [i][j] has coordinates j, i
 				tileNodeMap[i][j].location = new Tuple(j, i);
-				tileNodeMap[i][j].occupant = map[i][j];
+				
+				// The API requres MapLocation types instead of Tuples
+				MapLocation mapLocation = new MapLocation(planet, j, i);
 				
 				
+				// determines the occupant type based on the API
+				if (planetMap.isPassableTerrainAt(mapLocation) == 0) {
+					if (planetMap.initialKarboniteAt(mapLocation) > 0) {
+						tileNodeMap[i][j].occupant = -1;
+					} else {
+						tileNodeMap[i][j].occupant = 0;
+					}
+				} else {
+					tileNodeMap[i][j].occupant = 1;
+				}
+					
 				
 				/* checks if it is possible to move to a neighbor
 				 * if it is possible, add the neighbor's location to the list of 
@@ -91,18 +105,15 @@ public class PlanetMap {
 	}
 	
 	/**
-	 * Updates the occupants based on the integer grid
+	 * Updates the occupant of a TileNode at a specific location
+	 * 
+	 * @param location
+	 * 	The location of the TileNode 
+	 * @param occupant
+	 * 	The occupant represented as an integer
 	 */
-	public void updateOccupants() {
-		int height = tileNodeMap.length;
-		int width = tileNodeMap[0].length;
-		
-		for (int i = 0; i < height; i++) {
-			for (int j = 0; j < width; j++) {
-				tileNodeMap[i][j].occupant = map[i][j];
-				tileNodeMap[i][j].wasVisited = false;
-			}
-		}
+	public void updateLocation(Tuple location, int occupant) {
+		tileNodeMap[location.y][location.x].occupant = occupant;
 	}
 	
 	/**
@@ -119,8 +130,6 @@ public class PlanetMap {
 	 * 	points that the path visits in order
 	 */
 	public Tuple[] shortestPath(Tuple startingPoint, Tuple endingPoint) {
-		updateOccupants();
-		
 		// create a minPriorityQueue
 		PriorityQueue<TileNode> frontier = 
 				new PriorityQueue<TileNode>(1000, new TileNodeComparator());
@@ -219,9 +228,9 @@ public class PlanetMap {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		
-		for (int i = map.length - 1; i >= 0; i--) {
-			for (int j = 0; j < map[0].length; j++) {
-				sb.append(map[i][j] + " ");
+		for (int i = (int) height - 1; i >= 0; i--) {
+			for (int j = 0; j < width; j++) {
+				sb.append(tileNodeMap[i][j].occupant + " ");
 			}
 			
 			sb.append("\n");
@@ -240,8 +249,8 @@ public class PlanetMap {
 	public String toString(Tuple[] path) {
 		StringBuilder sb = new StringBuilder();
 		
-		for (int i = map.length - 1; i >= 0; i--) {
-			for (int j = 0; j < map[0].length; j++) {
+		for (int i = (int) height - 1; i >= 0; i--) {
+			for (int j = 0; j < width; j++) {
 				Tuple point = new Tuple(j, i);
 				boolean flag = false;
 				
@@ -253,7 +262,7 @@ public class PlanetMap {
 				}
 				
 				if (flag) sb.append("* ");
-				else sb.append(map[i][j] + " ");
+				else sb.append(tileNodeMap[i][j].occupant + " ");
 			}
 			
 			sb.append("\n");
