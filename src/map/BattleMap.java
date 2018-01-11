@@ -26,9 +26,9 @@ public class BattleMap implements Map {
 		tileNodeMap = new TileNode[height][width];
 		
 		long startTime = System.nanoTime();
-      makeGrid(planetMap);
-      long endTime = System.nanoTime();
-      System.out.println((endTime-startTime)/1000000.0);
+      		makeGrid(planetMap);
+      		long endTime = System.nanoTime();
+      		System.out.println((endTime-startTime)/1000000.0);
 	}
 	
 	/**
