@@ -1,5 +1,4 @@
-package algorithms;
-
+import bc.*;
 import java.util.PriorityQueue;
 import java.lang.Math;
 
@@ -8,33 +7,35 @@ import java.lang.Math;
  * 
  * @author virsain
  */
-public class PlanetMap {
-	
-	/* A grid of integers representing a planet
-	 * 0 represents an empty tile
-	 * 1 represents a water tile
-	 * 2 represents a Karbonite site
-	 */
-	public int map[][];
+public class BattleMap implements Map {
 	
 	// the map represented as a grid of TileNodes
 	public TileNode tileNodeMap[][];
 	
+	int height; // height of the map
+	int width;  // width of the map
+	Planet planet;
+	
 	/**
 	 * Creates a new Map
 	 */
-	public PlanetMap() {
+	public BattleMap(PlanetMap planetMap) {
+		planet = planetMap.getPlanet();
+		height = (int) planetMap.getHeight();
+		width = (int) planetMap.getWidth();
+		tileNodeMap = new TileNode[height][width];
 		
+		long startTime = System.nanoTime();
+      		makeGrid(planetMap);
+      		long endTime = System.nanoTime();
+      		System.out.println((endTime-startTime)/1000000.0);
 	}
 	
 	/**
 	 * Initializes the TileNodes and creates edges to their
 	 * neighboring TileNodes.
 	 */
-	public void makeGraph() {
-		int height = tileNodeMap.length;
-		int width = tileNodeMap[0].length;
-		
+	public void makeGrid(PlanetMap planetMap) {
 		// iterate through each tile and initialize it
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
@@ -42,9 +43,22 @@ public class PlanetMap {
 				
 				// something at [i][j] has coordinates j, i
 				tileNodeMap[i][j].location = new Tuple(j, i);
-				tileNodeMap[i][j].occupant = map[i][j];
+				
+				// The API requres MapLocation types instead of Tuples
+				MapLocation mapLocation = new MapLocation(planet, j, i);
 				
 				
+				// determines the tileType based on the API
+				if (planetMap.isPassableTerrainAt(mapLocation) == 1) {
+					if (planetMap.initialKarboniteAt(mapLocation) > 0) {
+						tileNodeMap[i][j].tileType = -1;
+					} else {
+						tileNodeMap[i][j].tileType = 0;
+					}
+				} else {
+					tileNodeMap[i][j].tileType = 1;
+				}
+					
 				
 				/* checks if it is possible to move to a neighbor
 				 * if it is possible, add the neighbor's location to the list of 
@@ -53,37 +67,37 @@ public class PlanetMap {
 				
 				int index = 0;
 				
-				// north
-				if (i-1 >= 0)
-					tileNodeMap[i][j].neighbors[index++] = new Tuple(i-1, j);
-				
 				// south
+				if (i-1 >= 0)
+					tileNodeMap[i][j].neighbors[index++] = new Tuple(j, i-1);
+				
+				// north
 				if (i+1 < height)
-					tileNodeMap[i][j].neighbors[index++] = new Tuple(i+1, j);
+					tileNodeMap[i][j].neighbors[index++] = new Tuple(j, i+1);
 				
 				// east
 				if (j-1 >= 0)
-					tileNodeMap[i][j].neighbors[index++] = new Tuple(i, j-1);
+					tileNodeMap[i][j].neighbors[index++] = new Tuple(j-1, i);
 				
 				// west
 				if (j+1 < width)
-					tileNodeMap[i][j].neighbors[index++] = new Tuple(i, j+1);
-				
-				// north-east
-				if (i-1 >= 0 && j-1 >= 0)
-					tileNodeMap[i][j].neighbors[index++] = new Tuple(i-1, j-1);
-				
-				// north-west
-				if (i-1 >= 0 && j+1 < width)
-					tileNodeMap[i][j].neighbors[index++] = new Tuple(i-1, j+1);
+					tileNodeMap[i][j].neighbors[index++] = new Tuple(j+1, i);
 				
 				// south-east
-				if (i+1 < height && j-1 >= 0)
-					tileNodeMap[i][j].neighbors[index++] = new Tuple(i+1, j-1);
+				if (i-1 >= 0 && j-1 >= 0)
+					tileNodeMap[i][j].neighbors[index++] = new Tuple(j-1, i-1);
 				
 				// south-west
+				if (i-1 >= 0 && j+1 < width)
+					tileNodeMap[i][j].neighbors[index++] = new Tuple(j+1, i-1);
+				
+				// north-east
+				if (i+1 < height && j-1 >= 0)
+					tileNodeMap[i][j].neighbors[index++] = new Tuple(j-1, i+1);
+				
+				// north-west
 				if (i+1 < height && j+1 < width)
-					tileNodeMap[i][j].neighbors[index++] = new Tuple(i+1, j+1);
+					tileNodeMap[i][j].neighbors[index++] = new Tuple(j+1, i+1);
 			
 				tileNodeMap[i][j].numOfNeighbors = index;
 			}
@@ -91,18 +105,15 @@ public class PlanetMap {
 	}
 	
 	/**
-	 * Updates the occupants based on the integer grid
+	 * Updates the occupant of a TileNode at a specific location
+	 * 
+	 * @param location
+	 * 	The location of the TileNode 
+	 * @param occupant
+	 * 	The occupant represented as an integer
 	 */
-	public void updateOccupants() {
-		int height = tileNodeMap.length;
-		int width = tileNodeMap[0].length;
-		
-		for (int i = 0; i < height; i++) {
-			for (int j = 0; j < width; j++) {
-				tileNodeMap[i][j].occupant = map[i][j];
-				tileNodeMap[i][j].wasVisited = false;
-			}
-		}
+	public void updateOccupant(MapLocation location, int occupant) {
+		tileNodeMap[location.getY()][location.getX()].occupant = occupant;
 	}
 	
 	/**
@@ -118,8 +129,19 @@ public class PlanetMap {
 	 * 	An array of Tuples which represents the 
 	 * 	points that the path visits in order
 	 */
-	public Tuple[] shortestPath(Tuple startingPoint, Tuple endingPoint) {
-		updateOccupants();
+	public MapLocation[] shortestPath(MapLocation start, MapLocation end) {
+		reset();
+		
+		Tuple startingPoint = new Tuple(start.getX(), start.getY());
+		Tuple endingPoint = new Tuple(end.getX(), end.getY());
+		
+		// the goal is a water tile
+		if (tileNodeMap[endingPoint.y][endingPoint.x].tileType > 0)
+			return new MapLocation[0];
+		
+		// the start and end points are the same
+		if (startingPoint.equals(endingPoint))
+			return new MapLocation[0];
 		
 		// create a minPriorityQueue
 		PriorityQueue<TileNode> frontier = 
@@ -127,18 +149,18 @@ public class PlanetMap {
 		
 		// set the distance to be 0 and predecessor to null
 		// because in a previous iteration it may have been a different value
-		tileNodeMap[startingPoint.x][startingPoint.y].distance = 0;
-		tileNodeMap[startingPoint.x][startingPoint.y].predecessor = null;
+		tileNodeMap[startingPoint.y][startingPoint.x].distance = 0;
+		tileNodeMap[startingPoint.y][startingPoint.x].predecessor = null;
 		
 		// update visited status
-		tileNodeMap[startingPoint.x][startingPoint.y].wasVisited = true;
+		tileNodeMap[startingPoint.y][startingPoint.x].wasVisited = true;
 		
 		// set the weight for the starting node
-		tileNodeMap[startingPoint.x][startingPoint.y].weight = 
+		tileNodeMap[startingPoint.y][startingPoint.x].weight = 
 				diagonalDistance(startingPoint, endingPoint);
 		
 		// add the starting node to the priority queue
-		frontier.add(tileNodeMap[startingPoint.x][startingPoint.y]);
+		frontier.add(tileNodeMap[startingPoint.y][startingPoint.x]);
 		
 		while (frontier.size() > 0) {
 			TileNode tile = frontier.poll();  // tile with smallest weight
@@ -146,20 +168,17 @@ public class PlanetMap {
 			// get each neighboring tile
 			for (int i = 0; i < tile.numOfNeighbors; i++) {
 				TileNode successor = 
-						tileNodeMap[tile.neighbors[i].x][tile.neighbors[i].y];
+						tileNodeMap[tile.neighbors[i].y][tile.neighbors[i].x];
 					
 				// if the goal has been reached
 				if (successor.location.equals(endingPoint)) {
-					// if goal is occupied return empty path (path does not exist)
-					if (successor.occupant > 0) return new Tuple[0];
-						
 					successor.predecessor = tile;
 					successor.distance = tile.distance + 1;
 					return getPath(successor);
 				}
 				
 				// if the tile is occupied or was already visited skip the tile
-				if (successor.occupant > 0 || successor.wasVisited) continue;
+				if (successor.tileType > 0 || successor.wasVisited) continue;
 				
 				// update successor's distance, weight, visited status
 				successor.distance = tile.distance + 1;
@@ -175,23 +194,47 @@ public class PlanetMap {
 			}
 		}
 		
-		return new Tuple[0];
+		return new MapLocation[0];
 	}
 	
-	public Tuple[] getPath(TileNode lastNode) {
-		Tuple[] path = new Tuple[lastNode.distance];
+	/**
+	 * Obtains the path from the startingNode to the endingNode
+	 * after A* search is done.
+	 * 
+	 * @param lastNode
+	 * 	The endingNode
+	 * @return
+	 * 	The path
+	 */
+	public MapLocation[] getPath(TileNode lastNode) {
+		MapLocation[] path = new MapLocation[lastNode.distance];
 		int index = lastNode.distance - 1;
 		
 		TileNode current = lastNode;
 		TileNode previous = lastNode.predecessor;
 		
+		// the previous node is the node that came before this node in the path
+		// if the previous node is null it means we reached the startNode
 		while (previous != null) {
-			path[index--] = current.location;
+			path[index--] = new MapLocation(planet, current.location.x, 
+					current.location.y);
 			current = previous;
 			previous = current.predecessor;
 		}
 		
 		return path;
+	}
+	
+	/**
+	 * Resets the values of wasVisited to false for each TileNode before
+	 * the A* heuristic search
+	 */
+	public void reset() {
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				tileNodeMap[i][j].wasVisited = false;
+			}
+		}
 	}
 	
 	/**
@@ -219,9 +262,9 @@ public class PlanetMap {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		
-		for (int i = map.length - 1; i >= 0; i--) {
-			for (int j = 0; j < map[0].length; j++) {
-				sb.append(map[i][j] + " ");
+		for (int i = (int) height - 1; i >= 0; i--) {
+			for (int j = 0; j < width; j++) {
+				sb.append(tileNodeMap[i][j].tileType + " ");
 			}
 			
 			sb.append("\n");
@@ -240,8 +283,8 @@ public class PlanetMap {
 	public String toString(Tuple[] path) {
 		StringBuilder sb = new StringBuilder();
 		
-		for (int i = map.length - 1; i >= 0; i--) {
-			for (int j = 0; j < map[0].length; j++) {
+		for (int i = (int) height - 1; i >= 0; i--) {
+			for (int j = 0; j < width; j++) {
 				Tuple point = new Tuple(j, i);
 				boolean flag = false;
 				
@@ -253,7 +296,7 @@ public class PlanetMap {
 				}
 				
 				if (flag) sb.append("* ");
-				else sb.append(map[i][j] + " ");
+				else sb.append(tileNodeMap[i][j].tileType + " ");
 			}
 			
 			sb.append("\n");
