@@ -6,10 +6,13 @@
 public class TileNode {
 	Tuple location; // the Cartesian location of the tile
 	
-	/* A grid of integers representing a planet
-	 * -1 represents a Karbonite site
+	/* -1 represents a Karbonite site
 	 * 0 represents an empty tile
 	 * 1 represents a water tile
+	 */
+	int tileType;
+	
+	/* An integer representing the occupant type
 	 * 2 represents an ally worker
  	 * 3 represents an ally knight
  	 * 4 represents an ally ranger

@@ -1,3 +1,5 @@
+import bc.*;
+
 public interface Map {
 	
 	/**
@@ -9,10 +11,10 @@ public interface Map {
 	 * 	The point at which the path ends
 	 * 
 	 * @return
-	 * 	An array of Tuples which represents the 
+	 * 	An array of MapLocations which represents the 
 	 * 	points that the path visits in order
 	 */
-	public Tuple[] shortestPath(Tuple startingPoint, Tuple endingPoint);
+	public MapLocation[] shortestPath(MapLocation startingPoint, MapLocation endingPoint);
 	
 	/**
 	 * Updates the occupant of a TileNode at a specific location
@@ -22,5 +24,5 @@ public interface Map {
 	 * @param occupant
 	 * 	The occupant represented as an integer
 	 */
-	public void updateLocation(Tuple location, int occupant);
+	public void updateOccupant(MapLocation location, int occupant);
 }
