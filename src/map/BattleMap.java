@@ -1,6 +1,6 @@
 import bc.*;
 
-import java.util.ArrayList;
+import java.util.ArrayDeque;
 import java.util.PriorityQueue;
 import java.lang.Math;
 
@@ -19,7 +19,7 @@ public class BattleMap implements Map {
 	Planet planet;  // Earth or Mars (Enum)
 		
 	// contains all Karbonite locations
-	ArrayList<MapLocation> karboniteLocations;  
+	ArrayDeque<MapLocation> karboniteLocations;  
 	
 	/**
 	 * Creates a new Map
@@ -29,9 +29,9 @@ public class BattleMap implements Map {
 		height = (int) planetMap.getHeight();
 		width = (int) planetMap.getWidth();
 		tileNodeMap = new TileNode[height][width];
-		karboniteLocations = new ArrayList<MapLocation>();
+		karboniteLocations = new ArrayDeque<MapLocation>();
 		
-		makeGrid(planetMap);
+      makeGrid(planetMap);
 	}
 	
 	/**
@@ -115,9 +115,9 @@ public class BattleMap implements Map {
 	/**
 	 * Returns the list of Karbonite locations on the map
 	 */
-	public ArrayList<MapLocation> getKarboniteLocations() {
+	public ArrayDeque<MapLocation> getKarboniteLocations() {
 		// we don't want the internal ArrayList to get modified so we clone
-		return (ArrayList<MapLocation>) karboniteLocations.clone();
+		return (ArrayDeque<MapLocation>) karboniteLocations.clone();
 	}
 	
 	/**

@@ -1,4 +1,5 @@
-import java.util.ArrayList;
+import java.util.ArrayDeque;
+
 import bc.*;
 
 public interface Map {
@@ -39,5 +40,5 @@ public interface Map {
 	/**
 	 * Returns the list of Karbonite locations on the map
 	 */
-	public ArrayList<MapLocation> getKarboniteLocations();
+	public ArrayDeque<MapLocation> getKarboniteLocations();
 }
