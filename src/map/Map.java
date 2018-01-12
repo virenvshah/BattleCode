@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import bc.*;
 
 public interface Map {
@@ -24,5 +25,19 @@ public interface Map {
 	 * @param occupant
 	 * 	The occupant represented as an integer
 	 */
-	public void updateOccupant(MapLocation location, int occupant);
+	public void updateOccupant(MapLocation location, UnitType occupant);
+	
+	/**
+	 * Returns the tile type as an integer at the given location. If the tile 
+	 * type is Karbonite, returns the integer amount of Karbonite.
+	 * 
+	 * @param location
+	 * 	The given MapLocation
+	 */
+	public int getTileType(MapLocation location);
+	
+	/**
+	 * Returns the list of Karbonite locations on the map
+	 */
+	public ArrayList<MapLocation> getKarboniteLocations();
 }
