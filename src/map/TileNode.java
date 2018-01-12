@@ -1,3 +1,5 @@
+import bc.*;
+
 /**
  * Represents a tile on a planet
  * 
@@ -12,23 +14,7 @@ public class TileNode {
 	 */
 	int tileType;
 	
-	/* An integer representing the occupant type
-	 * 2 represents an ally worker
- 	 * 3 represents an ally knight
- 	 * 4 represents an ally ranger
-    * 5 represents an ally mage
-    * 6 represents an ally healer
-    * 7 represents an ally rocket
-    * 8 represents an ally factory
-	 * 12 represents an enemy worker
-    * 13 represents an enemy knight
-    * 14 represents an enemy ranger
-    * 15 an enemy mage
-    * 16 an enemy healer
-    * 17 An enemy rocket
-    * 18 an enemy factory
-	 */
-	int occupant;
+	UnitType occupant;
 	
 	// contains the coordinates of tiles that can be reached from this TileNode
 	Tuple[] neighbors;

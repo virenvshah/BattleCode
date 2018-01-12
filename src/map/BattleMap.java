@@ -1,4 +1,6 @@
 import bc.*;
+
+import java.util.ArrayDeque;
 import java.util.PriorityQueue;
 import java.lang.Math;
 
@@ -14,7 +16,10 @@ public class BattleMap implements Map {
 	
 	int height; // height of the map
 	int width;  // width of the map
-	Planet planet;
+	Planet planet;  // Earth or Mars (Enum)
+		
+	// contains all Karbonite locations
+	ArrayDeque<MapLocation> karboniteLocations;  
 	
 	/**
 	 * Creates a new Map
@@ -24,18 +29,16 @@ public class BattleMap implements Map {
 		height = (int) planetMap.getHeight();
 		width = (int) planetMap.getWidth();
 		tileNodeMap = new TileNode[height][width];
+		karboniteLocations = new ArrayDeque<MapLocation>();
 		
-		long startTime = System.nanoTime();
-      		makeGrid(planetMap);
-      		long endTime = System.nanoTime();
-      		System.out.println((endTime-startTime)/1000000.0);
+      makeGrid(planetMap);
 	}
 	
 	/**
 	 * Initializes the TileNodes and creates edges to their
 	 * neighboring TileNodes.
 	 */
-	public void makeGrid(PlanetMap planetMap) {
+	private void makeGrid(PlanetMap planetMap) {
 		// iterate through each tile and initialize it
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
@@ -49,14 +52,19 @@ public class BattleMap implements Map {
 				
 				
 				// determines the tileType based on the API
+				// if the terrain is passable then it is either karbonite or empty
 				if (planetMap.isPassableTerrainAt(mapLocation) == 1) {
-					if (planetMap.initialKarboniteAt(mapLocation) > 0) {
-						tileNodeMap[i][j].tileType = -1;
+					int karbonite = (int) planetMap.initialKarboniteAt(mapLocation);
+
+					if (karbonite > 0) {
+						tileNodeMap[i][j].tileType = karbonite;
+						karboniteLocations.add(mapLocation);
 					} else {
 						tileNodeMap[i][j].tileType = 0;
 					}
+				// otherwise the tile is water	
 				} else {
-					tileNodeMap[i][j].tileType = 1;
+					tileNodeMap[i][j].tileType = -1;
 				}
 					
 				
@@ -105,6 +113,25 @@ public class BattleMap implements Map {
 	}
 	
 	/**
+	 * Returns the list of Karbonite locations on the map
+	 */
+	public ArrayDeque<MapLocation> getKarboniteLocations() {
+		// we don't want the internal ArrayList to get modified so we clone
+		return (ArrayDeque<MapLocation>) karboniteLocations.clone();
+	}
+	
+	/**
+	 * Returns the tile type as an integer at the given location. If the tile 
+	 * type is Karbonite, returns the integer amount of Karbonite.
+	 * 
+	 * @param location
+	 * 	The given MapLocation
+	 */
+	public int getTileType(MapLocation location) {
+		return tileNodeMap[location.getY()][location.getX()].tileType;
+	}
+	
+	/**
 	 * Updates the occupant of a TileNode at a specific location
 	 * 
 	 * @param location
@@ -112,7 +139,7 @@ public class BattleMap implements Map {
 	 * @param occupant
 	 * 	The occupant represented as an integer
 	 */
-	public void updateOccupant(MapLocation location, int occupant) {
+	public void updateOccupant(MapLocation location, UnitType occupant) {
 		tileNodeMap[location.getY()][location.getX()].occupant = occupant;
 	}
 	
@@ -136,7 +163,7 @@ public class BattleMap implements Map {
 		Tuple endingPoint = new Tuple(end.getX(), end.getY());
 		
 		// the goal is a water tile
-		if (tileNodeMap[endingPoint.y][endingPoint.x].tileType > 0)
+		if (tileNodeMap[endingPoint.y][endingPoint.x].tileType < 0)
 			return new MapLocation[0];
 		
 		// the start and end points are the same
@@ -178,7 +205,7 @@ public class BattleMap implements Map {
 				}
 				
 				// if the tile is occupied or was already visited skip the tile
-				if (successor.tileType > 0 || successor.wasVisited) continue;
+				if (successor.tileType < 0 || successor.wasVisited) continue;
 				
 				// update successor's distance, weight, visited status
 				successor.distance = tile.distance + 1;
@@ -206,7 +233,7 @@ public class BattleMap implements Map {
 	 * @return
 	 * 	The path
 	 */
-	public MapLocation[] getPath(TileNode lastNode) {
+	private MapLocation[] getPath(TileNode lastNode) {
 		MapLocation[] path = new MapLocation[lastNode.distance];
 		int index = lastNode.distance - 1;
 		
@@ -229,7 +256,7 @@ public class BattleMap implements Map {
 	 * Resets the values of wasVisited to false for each TileNode before
 	 * the A* heuristic search
 	 */
-	public void reset() {
+	private void reset() {
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
 				tileNodeMap[i][j].wasVisited = false;
@@ -244,7 +271,7 @@ public class BattleMap implements Map {
 	 * @return
 	 * 	The estimated distance
 	 */
-	public int diagonalDistance(Tuple a, Tuple b) {
+	private int diagonalDistance(Tuple a, Tuple b) {
 		// the difference in x values of the two points
 		int xDiff = Math.abs(a.x - b.x);
 		
