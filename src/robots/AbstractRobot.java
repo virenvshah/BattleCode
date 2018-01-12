@@ -1,5 +1,10 @@
 import bc.*;
 
+/**
+ * Super class for all Robots
+ * @author virsain
+ *
+ */
 public abstract class AbstractRobot {
 	int id;  // the robot's id
 	GameController gc;  // the game controller for the game
@@ -10,8 +15,16 @@ public abstract class AbstractRobot {
 	Map battleMap;  // A grid of TileNodes representing the full map
 	UnitType occupantType; // The robot Type
 
+	public AbstractRobot(int i, GameController g, Map map, MapLocation location) {
+		id = i;
+		gc = g;
+		battleMap = map;
+		moveIndex = 0;
+		currentLocation = location;
+	}
+	
 	/**
-	 * Tries to move the worker along a path.
+	 * Tries to move the robot along a path.
 	 * @return
 	 * 	Returns -1 if no path is set
 	 * 	Returns  0 if successfully moved
@@ -50,6 +63,33 @@ public abstract class AbstractRobot {
 		}
 		
 		return 0;
+	}
+	
+	/**
+	 * Tries to move the robot in a particular direction
+	 * 
+	 * @param dir
+	 * 	The direction in which the robot must move
+	 * @return
+	 * 	Returns 1 if successfully moved
+	 * 	Returns 2 if not ready to move (still on cooldown)
+	 * 	Returns 3 if path is blocked
+	 */
+	public int move(Direction dir) {
+		// movement cooldown still up
+		if (!gc.isMoveReady(id)) return 2; 
+		
+		// check if the robot can move in that direction
+		if (!gc.canMove(id, dir)) return 3;
+		
+		gc.moveRobot(id, dir);
+		// set previous location's occupant to 0
+		battleMap.updateOccupant(currentLocation, null);
+		// update the current location
+		currentLocation = currentLocation.add(dir);
+		// update the map to the new location of the robot
+		battleMap.updateOccupant(currentLocation, occupantType);
+		return 1;
 	}
 	
 	/**
