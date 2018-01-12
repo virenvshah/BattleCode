@@ -1,48 +1,45 @@
 import bc.*;
-import java.util.Random;
+import java.util.*;
 
+/*
+ * Small utility class for mining out an area.
+ * @author vineet
+*/
 public class Mine{
   /*
-   * mineLoop commands the given worker to
-   * mine until there is "kn" amount of Karbonite in the stash,
-   * or indefinitely (kn=-1).
+   * mineArea causes the unit with id "idd" to mine out the cell it's standing
+   * on along with all cells adjacent to it.
+   * @requires: idd is the ID of a worker unit, gc and navi are valid
+   * game controllers and maps.
    */
-  public static void mineLoop(Unit worker, long kn, GameController gc){
-    while (kn!=gc.karbonite()){
-      // so check the spaces around you
-      // then gather karbonite if there's more than 3 around
-      // then if you are finished getting karbonite (no significant
-      // reserves around), move randomly.
+  public static void mineArea(int idd, GameController gc, Map navi){
+      // gathers all karbonite from
+      Unit worker = gc.unit(idd);
       Location unitLoc = worker.location();
       if(unitLoc.isInSpace()){
         return;
       } else {
-        MapLocation mapLoc = unitLoc.mapLocation();
-        long[] karbonites = {gc.karboniteAt(mapLoc);
-                            gc.karboniteAt(mapLoc.translate(1,0));
-                             gc.karboniteAt(mapLoc.translate(1,1));
-                             gc.karboniteAt(mapLoc.translate(0,1));
-                             gc.karboniteAt(mapLoc.translate(-1,1));
-                             gc.karboniteAt(mapLoc.translate(-1,0));
-                             gc.karboniteAt(mapLoc.translate(-1,-1));
-                             gc.karboniteAt(mapLoc.translate(0,-1));
-                             gc.karboniteAt(mapLoc.translate(1,-1))
-                            };
         Direction[] dirs = Direction.value();
-        int idd = worker.id();
+        MapLocation[] square =
+          {
+            unitLoc.mapLocation();
+            unitLoc.mapLocation().add(East),
+            unitLoc.mapLocation().add(North),
+            unitLoc.mapLocation().add(Northeast),
+            unitLoc.mapLocation().add(Northwest),
+            unitLoc.mapLocation().add(South),
+            unitLoc.mapLocation().add(Southeast),
+            unitLoc.mapLocation().add(Southwest),
+            unitLoc.mapLocation().add(West)
+          };
         for (int i =0;i<9;i++){
-          if (gc.canHarvest(idd,dirs[i]) && karbonites[i] > 0){
-            gc.harvest(idd,dirs[i]);
+          while (gc.karboniteAt(square[i])!=0){
+            if(gc.canHarvest(idd,dirs[i])){
+              gc.harvest(idd,dirs[i]);
+            }
           }
         }
-        Random rand = new Random();
-
-        if (gc.canMove(idd,dirs[rand.nextInt(8)+1])
-          gc.moveRobot(idd,dirs[i+1]);
-
       }
-
-    }
   }
 
 }
