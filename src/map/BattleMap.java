@@ -31,7 +31,7 @@ public class BattleMap implements Map {
 		tileNodeMap = new TileNode[height][width];
 		karboniteLocations = new ArrayList<MapLocation>();
 		
-      makeGrid(planetMap);
+		makeGrid(planetMap);
 	}
 	
 	/**
