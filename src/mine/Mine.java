@@ -18,7 +18,8 @@ public class Mine{
         return;
       } else {
         MapLocation mapLoc = unitLoc.mapLocation();
-        long[] karbonites = {gc.karboniteAt(mapLoc.translate(1,0));
+        long[] karbonites = {gc.karboniteAt(mapLoc);
+                            gc.karboniteAt(mapLoc.translate(1,0));
                              gc.karboniteAt(mapLoc.translate(1,1));
                              gc.karboniteAt(mapLoc.translate(0,1));
                              gc.karboniteAt(mapLoc.translate(-1,1));
@@ -29,9 +30,9 @@ public class Mine{
                             };
         Direction[] dirs = Direction.value();
         int idd = worker.id();
-        for (int i =0;i<8;i++){
-          if (gc.canHarvest(idd,dirs[i+1]) && karbonites[i] > 0){
-            gc.harvest(idd,dirs[i+1]);
+        for (int i =0;i<9;i++){
+          if (gc.canHarvest(idd,dirs[i]) && karbonites[i] > 0){
+            gc.harvest(idd,dirs[i]);
           }
         }
         Random rand = new Random();
