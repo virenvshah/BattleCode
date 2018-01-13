@@ -64,9 +64,9 @@ public class MiningPlayer {
 				} else {
 					// put deque selection on this thing: we went from mining to
 					// a standstill
-					while(!(mineLocs.isEmpty())){ //while it's not empty
-						MapLocation temp = mineLocs.remove();
-						if(!(minedOut.contains(temp))){
+					while(!(worker.mineLocs.isEmpty())){ //while it's not empty
+						MapLocation temp = worker.mineLocs.remove();
+						if(!(worker.minedOut.contains(temp))){
 							worker.setPath(worker.currentLocation,temp);
 							// update the state
 							worker.previousState=worker.state;
