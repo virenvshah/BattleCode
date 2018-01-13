@@ -1,16 +1,11 @@
-package robots;
-
-import api.*;
-import map.*;
-// import bc.*;
+import bc.*;
 
 /**
  * Super class for all Robots
  * @author virsain
  *
  */
-public abstract class AbstractRobot {
-	int id;  // the robot's id
+public abstract class AbstractRobot extends AbstractUnit {
 	GameController gc;  // the game controller for the game
 	MapLocation[] movePath;  // the path along which the robot must move
 	int moveIndex;  // the index of movePath, the number of steps the robot
@@ -86,6 +81,7 @@ public abstract class AbstractRobot {
 		// check if the robot can move in that direction
 		if (!gc.canMove(id, dir)) return 3;
 		
+		gc.moveRobot(id, dir);
 		// set previous location's occupant to 0
 		battleMap.updateOccupant(currentLocation, null);
 		// update the current location
