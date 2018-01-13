@@ -6,9 +6,9 @@ import java.util.*;
  * @author vineet
  *
  */
-public class FactoryBuildingPlayer {
+public class MiningPlayer {
 	public static void main(String args[]) {
-		FactoryBuildingPlayer fbp = new FactoryBuildingPlayer();
+		MiningPlayer fbp = new MiningPlayer();
 		GameController gc = new GameController();
 		Worker worker = null;
 
@@ -60,9 +60,10 @@ public class FactoryBuildingPlayer {
 		switch(worker.state){
 			case Idle:
 				if (worker.previousState == Worker.State.Move){
-					worker.mineArea(); // edit to ensure this is correct
+					worker.mineArea(); // start mining
 				} else {
-					// put deque selection on this thing
+					// put deque selection on this thing: we went from mining to
+					// a standstill
 					while(!(mineLocs.isEmpty())){ //while it's not empty
 						MapLocation temp = mineLocs.remove();
 						if(!(minedOut.contains(temp))){
