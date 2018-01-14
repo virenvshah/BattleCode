@@ -21,22 +21,33 @@ public class Factory extends AbstractStructure {
 	 * @param dir
 	 * 	The direction to unload the unit
 	 * @return
-	 * 	1 if unloaded successfully
-	 * 	2 if unloading was not possible
+	 * 	An AbstractRobot object if unloaded successfully
+	 * 	null if unloading was not possible
 	 */
-	public int unload(Direction dir) {
+	public AbstractRobot unload(Direction dir) {
 		previousState = state;
 		
 		// check if factory can unload
 		if (!gc.canUnload(id, dir)) {
 			state = State.Unload;
-			return 2;
+			return null;
 		}
 		
 		System.out.println("unloading");
 		gc.unload(id, dir);
+		
+		// update the factory state
 		state = State.Idle;
-		return 1;
+		
+		// create a robot class for the type unloaded
+		MapLocation robotLocation = currentLocation.add(dir);
+		Unit robot = gc.senseUnitAtLocation(robotLocation);
+		
+		if (robot.unitType() == UnitType.Knight) {
+			return new Knight(robot.id(), gc, battleMap, robotLocation);
+		}
+		
+		return null;
 	}
 	
 	/**
@@ -57,14 +68,11 @@ public class Factory extends AbstractStructure {
 		// check to see if the factory is built
 		if (gc.unit(id).structureIsBuilt() == 0) {
 			state = State.Blueprint;
-			System.out.println("Factory Not Built");
 			return -1;
 		}
 		
-		// if the factory is still producing
-		System.out.println("yo yo");
+		// if the factory is still producing	
 		if (gc.unit(id).isFactoryProducing() == 1) {
-			System.out.println("Not done producing");
 			state = State.Produce;
 			return 3;
 		/* if the factory is not producing and just finished producing
@@ -82,8 +90,7 @@ public class Factory extends AbstractStructure {
 			state = State.Bankrupt;
 			return 2;
 		}
-		
-		System.out.println("producing");
+	
 		gc.produceRobot(id, unitType);
 		state = State.Produce;
 		return 1;

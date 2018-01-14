@@ -5,11 +5,6 @@ import bc.*;
  * @author virsain
  */
 public class Worker extends AbstractRobot {
-	public enum State { Build, Move, Mine, Idle; };
-	
-	public State state;
-	public State previousState;
-	
 	// the blueprint which the worker is currently working on
 	public AbstractStructure currentBlueprint; 
 	
@@ -25,8 +20,7 @@ public class Worker extends AbstractRobot {
 	 * 	The initial location of the worker
 	 */
 	public Worker(int i, GameController g, Map map, MapLocation location) {
-		super(i, g, map, location);
-		occupantType = UnitType.Worker;
+		super(i, g, map, location, UnitType.Worker);
 		state = State.Idle;
 		previousState = State.Idle;
 	}
@@ -92,14 +86,13 @@ public class Worker extends AbstractRobot {
 		// check to see if the worker can build
 		if (!gc.canBuild(id, currentBlueprint.id)) return 2;
 		
-		System.out.println("building");
 		gc.build(id, currentBlueprint.id);
 		
 		// if the structure is completely built
 		if (gc.unit(currentBlueprint.id).structureIsBuilt() == 1) {
 			state = State.Idle;
 			currentBlueprint.state = AbstractStructure.State.Idle;
-			System.out.println("STATE CHANGED");
+			System.out.println("Structure built");
 			currentBlueprint = null;
 			return 1;
 		}
@@ -150,7 +143,6 @@ public class Worker extends AbstractRobot {
 
 		// worker finished moving, worker's state is null
 		if (returnValue == 1) {
-			System.out.println("moved");
 			state = State.Idle;
 		}
 		// if worker is still must move along direction, worker's state is MOVE
@@ -158,5 +150,9 @@ public class Worker extends AbstractRobot {
 			state = State.Move;
 		
 		return returnValue;
+	}
+	
+	public int ability() {
+		return 0;
 	}
 }
