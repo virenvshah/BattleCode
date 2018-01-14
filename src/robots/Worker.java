@@ -70,11 +70,11 @@ public class Worker extends AbstractRobot {
  		for (int i =0;i<dirs.length;i++){
 			// if worker is on cooldown
 			 if(!(gc.canHarvest(id,dirs[i]))
-			 && karboniteAt(currentLocation.add(dirs[i])) > 0.){
+			 && gc.karboniteAt(currentLocation.add(dirs[i])) > 0.){
 				 return -1;
 			 }
 			 // if worker can mine and there's karbonite at this point
-			 else if (karboniteAt(currentLocation.add(dirs[i])) > 0.){
+			 else if (gc.karboniteAt(currentLocation.add(dirs[i])) > 0.){
 				 pointToMine=i;
 			 }
 			 // if worker can mine but no carbonite is available
@@ -170,55 +170,4 @@ public class Worker extends AbstractRobot {
 		return 0;
 	}
 
-	/**
-	 * Tries to move the robot along a path.
-	 * @return
-	 * 	Returns -1 if no path is set
-	 * 	Returns  0 if successfully moved
-	 * 	Returns  1 if successfully moved and reached destination
-	 * 	Returns  2 if not ready to move (still on cooldown)
-	 * 	Returns  3 if path is blocked
-	 */
-	public int move() {
-		previousState = state;
-		int returnValue = super.move();
-
-		// if no path is set, or worker finished moving, worker's state is null
-		if (returnValue == -1 && returnValue == 1)
-			state = State.Idle;
-
-		// if worker is still moving along path, worker's state is MOVE
-		else
-			state = State.Move;
-
-		return returnValue;
-
-	}
-
-	/**
-	 * Tries to move the robot in a particular direction
-	 *
-	 * @param dir
-	 * 	The direction in which the robot must move
-	 * @return
-	 * 	Returns 1 if successfully moved
-	 * 	Returns 2 if not ready to move (still on cooldown)
-	 * 	Returns 3 if path is blocked
-	 */
-	public int move(Direction dir) {
-		previousState = state;
-		int returnValue = super.move(dir);
-
-		// worker finished moving, worker's state is null
-		if (returnValue == 1) {
-			System.out.println("moved");
-			state = State.Idle;
-		}
-
-		// if worker is still must move along direction, worker's state is MOVE
-		else
-			state = State.Move;
-
-		return returnValue;
-	}
 }
