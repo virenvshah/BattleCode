@@ -22,7 +22,7 @@ public abstract class AbstractRobot {
 		moveIndex = 0;
 		currentLocation = location;
 	}
-	
+
 	/**
 	 * Tries to move the robot along a path.
 	 * @return
@@ -35,16 +35,16 @@ public abstract class AbstractRobot {
 	public int move() {
 		// no path is set
 		if (movePath == null) return -1;
-		
+
 		// movement cooldown still up
-		if (!gc.isMoveReady(id)) return 1; 
-		
+		if (!gc.isMoveReady(id)) return 2; 
+
 		// get the next step's direction
 		Direction dir = currentLocation.directionTo(movePath[moveIndex]);
-		
+
 		// check if the robot can move in that direction
 		if (!gc.canMove(id, dir)) return 3;
-		
+
 		gc.moveRobot(id, dir);
 		// set previous location's occupant to 0
 		battleMap.updateOccupant(currentLocation, null);
@@ -52,22 +52,22 @@ public abstract class AbstractRobot {
 		currentLocation = movePath[moveIndex];
 		// update the map to the new location of the robot
 		battleMap.updateOccupant(currentLocation, occupantType);
-		
+
 		moveIndex++;
-		
+
 		// if reached destination then reset path
 		if (moveIndex == movePath.length) {
 			movePath = null;
 			moveIndex = 0;
 			return 1;
 		}
-		
+
 		return 0;
 	}
-	
+
 	/**
 	 * Tries to move the robot in a particular direction
-	 * 
+	 *
 	 * @param dir
 	 * 	The direction in which the robot must move
 	 * @return
@@ -77,11 +77,11 @@ public abstract class AbstractRobot {
 	 */
 	public int move(Direction dir) {
 		// movement cooldown still up
-		if (!gc.isMoveReady(id)) return 2; 
-		
+		if (!gc.isMoveReady(id)) return 2;
+
 		// check if the robot can move in that direction
 		if (!gc.canMove(id, dir)) return 3;
-		
+
 		gc.moveRobot(id, dir);
 		// set previous location's occupant to 0
 		battleMap.updateOccupant(currentLocation, null);
@@ -91,30 +91,30 @@ public abstract class AbstractRobot {
 		battleMap.updateOccupant(currentLocation, occupantType);
 		return 1;
 	}
-	
+
 	/**
 	 * Finds the shortestPath between the start and end locations and sets
 	 * the robot's movePath to that path
-	 * 
+	 *
 	 * @param start
 	 * 	The start location
 	 * @param end
 	 * 	The end location
-	 * 
-	 * @return 
+	 *
+	 * @return
 	 * 	True if there is a path between the start and end locations, false
 	 * 	if no path exists.
 	 */
 	public boolean setPath(MapLocation start, MapLocation end) {
 		MapLocation[] path = battleMap.shortestPath(start, end);
-		
+
 		// if path is empty, then no path exists
 		if (path.length == 0) return false;
-		
+
 		movePath = path;
 		return true;
 	}
-	
+
 	public MapLocation getLocation() {
 		return currentLocation;
 	}

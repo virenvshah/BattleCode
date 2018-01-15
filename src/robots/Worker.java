@@ -61,27 +61,69 @@ public class Worker extends AbstractRobot {
 		 // update the State
 		 state = State.Mine;
 
-		 Direction[] dirs = Direction.value();
+		 Direction[] dirs = Direction.values();
 
 		// checking if the tile isn't mined out, but the unit can't mine
 		// also determining the direction to mine in and updating the pointers
 		// to include mined out locations
-		int pointToMine;
+		int pointToMine=0;
  		for (int i =0;i<dirs.length;i++){
 			// if worker is on cooldown
 			 if(!(gc.canHarvest(id,dirs[i]))
 			 && gc.karboniteAt(currentLocation.add(dirs[i])) > 0.){
-				 return -1;
+				 System.out.println("Can't mine rn");return -1;
 			 }
 			 // if worker can mine and there's karbonite at this point
 			 else if (gc.karboniteAt(currentLocation.add(dirs[i])) > 0.){
 				 pointToMine=i;
+				 switch(pointToMine){
+					 case 0:
+					 System.out.println("Mining center");break;
+					 case 1:
+					 System.out.println("Mining east");break;
+					 case 2:
+					 System.out.println("Mining north");break;
+					 case 3:
+					 System.out.println("Mining NE");break;
+					 case 4:
+					 System.out.println("Mining NW");break;
+					 case 5:
+					 System.out.println("Mining south");break;
+					 case 6:
+					 System.out.println("Mining SE");break;
+					 case 7:
+					 System.out.println("Mining SW");break;
+					 case 8:
+					 System.out.println("Mining west");break;
+				 }
+				 break;
 			 }
 			 // if worker can mine but no carbonite is available
 			 else {
 				 minedOut.add(currentLocation.add(dirs[i]));
+				 switch(i){
+					 case 0:
+					 System.out.println("Done with center");break;
+					 case 1:
+					 System.out.println("Done with east");break;
+					 case 2:
+					 System.out.println("Done with north");break;
+					 case 3:
+					 System.out.println("Done with NE");break;
+					 case 4:
+					 System.out.println("Done with NW");break;
+					 case 5:
+					 System.out.println("Done with south");break;
+					 case 6:
+					 System.out.println("Done with SE");break;
+					 case 7:
+					 System.out.println("Done with SW");break;
+					 case 8:
+					 System.out.println("Done with west");break;
+				 }
 				 // if this is the last mine tile, then set to "done"
 				 if (i==8){
+					 System.out.println("Done with this area");
 					 state = State.Idle;
 					 pointToMine = 9;
 				 }
@@ -90,10 +132,15 @@ public class Worker extends AbstractRobot {
 
 		// actually harvest the thing
 		if (pointToMine>=0 && pointToMine<9){
+			System.out.println(gc.canHarvest(id,dirs[pointToMine]));
+			System.out.println("Harvesting");
 			gc.harvest(id,dirs[pointToMine]);
+			System.out.println("Harvested");
 		}
+		System.out.println("Karbonite pool at "+gc.karbonite());
 
 		// return current progress
+		System.out.println("Current progress index: " + pointToMine);
 		return pointToMine;
 	 }
 
