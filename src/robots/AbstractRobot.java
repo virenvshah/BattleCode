@@ -5,22 +5,28 @@ import bc.*;
  * @author virsain
  *
  */
-public abstract class AbstractRobot {
-	int id;  // the robot's id
+public abstract class AbstractRobot extends AbstractUnit {
+	public enum State { Build, Move, Mine, Idle; };
+	
 	GameController gc;  // the game controller for the game
 	MapLocation[] movePath;  // the path along which the robot must move
 	int moveIndex;  // the index of movePath, the number of steps the robot
 						 // has already taken along the path
 	MapLocation currentLocation; // the robot's current location
 	Map battleMap;  // A grid of TileNodes representing the full map
-	UnitType occupantType; // The robot Type
+	UnitType type; // The robot Type
+	public State state; // The robot's present state
+	public State previousState;  // The robot's previous state
 
-	public AbstractRobot(int i, GameController g, Map map, MapLocation location) {
+	public AbstractRobot(int i, GameController g, Map map, MapLocation location,
+			UnitType t) {
 		id = i;
 		gc = g;
 		battleMap = map;
 		moveIndex = 0;
 		currentLocation = location;
+		type = t;
+		
 	}
 	
 	/**
@@ -51,7 +57,7 @@ public abstract class AbstractRobot {
 		// update the current location
 		currentLocation = movePath[moveIndex];
 		// update the map to the new location of the robot
-		battleMap.updateOccupant(currentLocation, occupantType);
+		battleMap.updateOccupant(currentLocation, type);
 		
 		moveIndex++;
 		
@@ -88,7 +94,7 @@ public abstract class AbstractRobot {
 		// update the current location
 		currentLocation = currentLocation.add(dir);
 		// update the map to the new location of the robot
-		battleMap.updateOccupant(currentLocation, occupantType);
+		battleMap.updateOccupant(currentLocation, type);
 		return 1;
 	}
 	
@@ -118,4 +124,6 @@ public abstract class AbstractRobot {
 	public MapLocation getLocation() {
 		return currentLocation;
 	}
+	
+	public abstract int ability();
 }
