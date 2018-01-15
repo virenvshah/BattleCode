@@ -14,6 +14,9 @@ public class BattleMap implements Map {
 	// the map represented as a grid of TileNodes
 	public TileNode tileNodeMap[][];
 	
+	public Team allyTeamColor;
+	public Team enemyTeamColor;
+	
 	int height; // height of the map
 	int width;  // width of the map
 	Planet planet;  // Earth or Mars (Enum)
@@ -24,13 +27,15 @@ public class BattleMap implements Map {
 	/**
 	 * Creates a new Map
 	 */
-	public BattleMap(PlanetMap planetMap) {
+	public BattleMap(PlanetMap planetMap, Team ally, Team enemy) {
 		planet = planetMap.getPlanet();
 		height = (int) planetMap.getHeight();
 		width = (int) planetMap.getWidth();
 		tileNodeMap = new TileNode[height][width];
 		karboniteLocations = new ArrayDeque<MapLocation>();
 		
+		allyTeamColor = ally;
+		enemyTeamColor = enemy;
       makeGrid(planetMap);
 	}
 	
@@ -47,7 +52,7 @@ public class BattleMap implements Map {
 				// something at [i][j] has coordinates j, i
 				tileNodeMap[i][j].location = new Tuple(j, i);
 				
-				// The API requres MapLocation types instead of Tuples
+				// The API requires MapLocation types instead of Tuples
 				MapLocation mapLocation = new MapLocation(planet, j, i);
 				
 				
@@ -83,27 +88,27 @@ public class BattleMap implements Map {
 				if (i+1 < height)
 					tileNodeMap[i][j].neighbors[index++] = new Tuple(j, i+1);
 				
-				// east
+				// west
 				if (j-1 >= 0)
 					tileNodeMap[i][j].neighbors[index++] = new Tuple(j-1, i);
 				
-				// west
+				// east
 				if (j+1 < width)
 					tileNodeMap[i][j].neighbors[index++] = new Tuple(j+1, i);
 				
-				// south-east
+				// south-west
 				if (i-1 >= 0 && j-1 >= 0)
 					tileNodeMap[i][j].neighbors[index++] = new Tuple(j-1, i-1);
 				
-				// south-west
+				// south-east
 				if (i-1 >= 0 && j+1 < width)
 					tileNodeMap[i][j].neighbors[index++] = new Tuple(j+1, i-1);
 				
-				// north-east
+				// north-west
 				if (i+1 < height && j-1 >= 0)
 					tileNodeMap[i][j].neighbors[index++] = new Tuple(j-1, i+1);
 				
-				// north-west
+				// north-east
 				if (i+1 < height && j+1 < width)
 					tileNodeMap[i][j].neighbors[index++] = new Tuple(j+1, i+1);
 			
@@ -222,6 +227,20 @@ public class BattleMap implements Map {
 		}
 		
 		return new MapLocation[0];
+	}
+	
+	/**
+	 * Returns the ally team color
+	 */
+	public Team getAllyTeamColor() {
+		return allyTeamColor;
+	}
+	
+	/**
+	 * Returns the enemy team color
+	 */
+	public Team getEnemyTeamColor() {
+		return enemyTeamColor;
 	}
 	
 	/**
