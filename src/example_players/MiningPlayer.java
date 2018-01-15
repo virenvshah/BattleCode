@@ -8,6 +8,11 @@ import java.util.*;
  *
  */
 public class MiningPlayer {
+	// The hashMap where all units are stored, the key is their id
+	HashMap<Integer, AbstractUnit> unitHashMap;
+	GameController gc;
+	BattleMap earthBattleMap;
+
 	public static void main(String args[]) {
 		MiningPlayer fbp = new MiningPlayer();
 		fbp.gc = new GameController();
