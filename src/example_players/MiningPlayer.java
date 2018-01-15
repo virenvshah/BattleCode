@@ -1,3 +1,4 @@
+
 import bc.*;
 import java.util.*;
 
@@ -60,7 +61,6 @@ public class MiningPlayer {
 		switch(worker.state){
 			case Idle:
 				if (worker.previousState == Worker.State.Move){
-					System.out.println("Starting to mine");
 					worker.mineArea(); // start mining
 				} else {
 					// put deque selection on this thing: we went from mining to
@@ -72,23 +72,15 @@ public class MiningPlayer {
 							// update the state
 							worker.previousState=worker.state;
 							worker.state=Worker.State.Move;
-							System.out.println("Picked a spot, let's move");
 							break;
 						}
 					}
 				}
-				break;
 			case Mine:
-				System.out.println("Mining");
 				worker.mineArea();
 				break;
 			case Move:
-				System.out.println("Moving");
-			 	if (worker.move()==1){
-					// update state when you're here
-					worker.previousState=worker.state;
-					worker.state=Worker.State.Idle;
-				}
+			 	worker.move();
 				break;
 			default:
 		 		return;
