@@ -5,22 +5,28 @@ import bc.*;
  * @author virsain
  *
  */
-public abstract class AbstractRobot {
-	int id;  // the robot's id
+public abstract class AbstractRobot extends AbstractUnit {
+	public enum State { Build, Move, Mine, Idle; };
+
 	GameController gc;  // the game controller for the game
 	MapLocation[] movePath;  // the path along which the robot must move
 	int moveIndex;  // the index of movePath, the number of steps the robot
 						 // has already taken along the path
 	MapLocation currentLocation; // the robot's current location
 	Map battleMap;  // A grid of TileNodes representing the full map
-	UnitType occupantType; // The robot Type
+	UnitType type; // The robot Type
+	public State state; // The robot's present state
+	public State previousState;  // The robot's previous state
 
-	public AbstractRobot(int i, GameController g, Map map, MapLocation location) {
+	public AbstractRobot(int i, GameController g, Map map, MapLocation location,
+			UnitType t) {
 		id = i;
 		gc = g;
 		battleMap = map;
 		moveIndex = 0;
 		currentLocation = location;
+		type = t;
+
 	}
 
 	/**
@@ -37,7 +43,7 @@ public abstract class AbstractRobot {
 		if (movePath == null) return -1;
 
 		// movement cooldown still up
-		if (!gc.isMoveReady(id)) return 2; 
+		if (!gc.isMoveReady(id)) return 2;
 
 		// get the next step's direction
 		Direction dir = currentLocation.directionTo(movePath[moveIndex]);
@@ -51,7 +57,7 @@ public abstract class AbstractRobot {
 		// update the current location
 		currentLocation = movePath[moveIndex];
 		// update the map to the new location of the robot
-		battleMap.updateOccupant(currentLocation, occupantType);
+		battleMap.updateOccupant(currentLocation, type);
 
 		moveIndex++;
 
@@ -93,6 +99,33 @@ public abstract class AbstractRobot {
 	}
 
 	/**
+	 * Tries to move the robot in a particular direction
+	 *
+	 * @param dir
+	 * 	The direction in which the robot must move
+	 * @return
+	 * 	Returns 1 if successfully moved
+	 * 	Returns 2 if not ready to move (still on cooldown)
+	 * 	Returns 3 if path is blocked
+	 */
+	public int move(Direction dir) {
+		// movement cooldown still up
+		if (!gc.isMoveReady(id)) return 2;
+
+		// check if the robot can move in that direction
+		if (!gc.canMove(id, dir)) return 3;
+
+		gc.moveRobot(id, dir);
+		// set previous location's occupant to 0
+		battleMap.updateOccupant(currentLocation, null);
+		// update the current location
+		currentLocation = currentLocation.add(dir);
+		// update the map to the new location of the robot
+		battleMap.updateOccupant(currentLocation, type);
+		return 1;
+	}
+
+	/**
 	 * Finds the shortestPath between the start and end locations and sets
 	 * the robot's movePath to that path
 	 *
@@ -118,4 +151,6 @@ public abstract class AbstractRobot {
 	public MapLocation getLocation() {
 		return currentLocation;
 	}
+
+	public abstract int ability();
 }

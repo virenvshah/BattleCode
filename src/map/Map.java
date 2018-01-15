@@ -1,7 +1,11 @@
-import java.util.ArrayDeque;
-
 import bc.*;
 
+import java.util.ArrayDeque;
+
+/**
+ * Represents a Map Grid in the game
+ * @author virsain
+ */
 public interface Map {
 	
 	/**
@@ -41,4 +45,14 @@ public interface Map {
 	 * Returns the list of Karbonite locations on the map
 	 */
 	public ArrayDeque<MapLocation> getKarboniteLocations();
+	
+	/**
+	 * Returns the ally team color
+	 */
+	public Team getAllyTeamColor();
+	
+	/**
+	 * Returns the enemy team color
+	 */
+	public Team getEnemyTeamColor();
 }
