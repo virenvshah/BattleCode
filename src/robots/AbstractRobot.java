@@ -8,7 +8,7 @@ import bc.*;
 public abstract class AbstractRobot extends AbstractUnit {
 	public enum State { Build, Move, Mine, Idle; };
 	private int range[] = {72, 50, 32, 18, 8, 1};
-	
+	int id;  // the robot's id
 	GameController gc;  // the game controller for the game
 	MapLocation[] movePath;  // the path along which the robot must move
 	int moveIndex;  // the index of movePath, the number of steps the robot
@@ -19,15 +19,13 @@ public abstract class AbstractRobot extends AbstractUnit {
 	public State state; // The robot's present state
 	public State previousState;  // The robot's previous state
 
-	public AbstractRobot(int i, GameController g, Map map, MapLocation location,
-			UnitType t) {
+	public AbstractRobot(int i, GameController g, Map map, MapLocation location, UnitType t) {
 		id = i;
 		gc = g;
 		battleMap = map;
 		moveIndex = 0;
 		currentLocation = location;
 		type = t;
-		
 	}
 	
 	/**

@@ -101,8 +101,4 @@ public class Worker extends AbstractRobot {
 		state = State.Build;
 		return 0;
 	}
-	
-	public int ability() {
-		return 0;
-	}
 }
