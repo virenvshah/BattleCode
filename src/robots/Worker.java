@@ -38,6 +38,21 @@ public class Worker extends AbstractRobot {
 	}
 
 	/**
+	 * Gets the worker to replicate
+	 * @return -1 if it can't replicate at all, 0 if it just did
+	 */
+	 public int replicate(){
+		 Direction[] dirs = Direction.values();
+		 for (int i = 0;i<dirs.length;i++){
+			 if(gc.canReplicate(id,dirs[i])){
+				 gc.replicate(id,dirs[i]);
+				 return 0;
+			 }
+		 }
+		 return -1;
+	 }
+
+	/**
 	 * Creates a new blueprint at the specified direction
 	 * @param dir
 	 * 	The direction from the worker
