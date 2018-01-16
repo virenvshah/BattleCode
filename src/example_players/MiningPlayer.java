@@ -31,6 +31,10 @@ public class MiningPlayer {
 	   fbp.earthBattleMap = new BattleMap(earthPlanetMap,
 	   		allyTeam, enemyTeam);
 
+			// make mining data structures:
+			ArrayDeque<MapLocation> mineLocs = fbp.earthBattleMap.getKarboniteLocations();
+			HashSet<MapLocation> minedOut = new HashSet();
+
 	   // create the hashMap where all the units are stored
 	   fbp.unitHashMap = new HashMap<Integer, AbstractUnit>();
 
@@ -55,7 +59,7 @@ public class MiningPlayer {
 	      			// if the worker isn't stored in the hashMap create a new one
 	      			if (worker == null) {
 	      				worker = new Worker(unit.id(), fbp.gc, fbp.earthBattleMap,
-	         		   		unit.location().mapLocation());
+	         		   		unit.location().mapLocation(), mineLocs, minedOut);
 	      				fbp.unitHashMap.put(worker.id, worker);
 	      			}
 
@@ -184,7 +188,7 @@ public class MiningPlayer {
 		Knight knight = (Knight) robot;
 
 		// attack!!!
-		robot.ability();
+		robot.attack();
 
 		// get the direction the enemy is in
 		Direction dir = knight.enemyDirection();
@@ -198,7 +202,7 @@ public class MiningPlayer {
 		}
 
 		// try attacking again in case attacking wasn't possible the first time
-		robot.ability();
+		robot.attack();
 	}
 
 	/**
