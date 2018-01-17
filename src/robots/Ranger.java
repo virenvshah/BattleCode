@@ -1,8 +1,4 @@
-package robots;
-
-import api.*;
-import map.Map;
-//import bc.*;
+import bc.*;
 
 /**
  * Represents a ranger robot in the game
@@ -10,7 +6,8 @@ import map.Map;
  */
 public class Ranger extends AbstractRobot {
 	public Ranger(int i, GameController g, Map map, MapLocation location) {
-		super(i, g, map, location);
-		occupantType = UnitType.Ranger;
+		super(i, g, map, location, UnitType.Ranger);
+		state = State.Idle;
+		previousState = State.Idle;
 	}
 }

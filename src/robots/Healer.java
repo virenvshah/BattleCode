@@ -1,8 +1,4 @@
-package robots;
-
-import api.*;
-import map.Map;
-//import bc.*;
+import bc.*;
 
 /**
  * Represents a healer robot in the game
@@ -10,7 +6,6 @@ import map.Map;
  */
 public class Healer extends AbstractRobot {
 	public Healer(int i, GameController g, Map map, MapLocation location) {
-		super(i, g, map, location);
-		occupantType = UnitType.Healer;
+		super(i, g, map, location, UnitType.Healer);
 	}
 }

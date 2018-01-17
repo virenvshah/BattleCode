@@ -19,24 +19,7 @@ public class FactoryUnloadingPlayer {
 		
 		// get the team colors
 		Team allyTeam = fbp.gc.team();
-		Team enemyTeam;
-		if (allyTeam == Team.Red) enemyTeam = Team.Blue;
-		else enemyTeam = Team.Red;
-		
-		
-		// get the API specific planet Map
-	   PlanetMap earthPlanetMap = fbp.gc.startingMap(Planet.Earth);
-	   
-	   // make our own map from the API specific map
-	   fbp.earthBattleMap = new BattleMap(earthPlanetMap, 
-	   		allyTeam, enemyTeam);
-	   
-	   // create the hashMap where all the units are stored
-	   fbp.unitHashMap = new HashMap<Integer, AbstractUnit>();
-	   
-	   
-	   while (true) {
-	   	System.out.println("Current Round: " + fbp.gc.round());
+		System.out.println("Current Round: " + fbp.gc.round());
 	   	/* if an exception occurs we don't want the program to crash because
 	   	 * we will lose the game
 	   	 */
@@ -57,6 +40,7 @@ public class FactoryUnloadingPlayer {
 	      				worker = new Worker(unit.id(), fbp.gc, fbp.earthBattleMap, 
 	         		   		unit.location().mapLocation());
 	      				fbp.unitHashMap.put(worker.id, worker);
+					worker.move(Direction.West);
 	      			}
 	      		
 	      			fbp.build(worker);
@@ -72,7 +56,7 @@ public class FactoryUnloadingPlayer {
 	      				System.exit(0);
 	      			}
 	      			
-	      			fbp.produce(factory, UnitType.Knight);
+	      			fbp.produce(factory, UnitType.Ranger);
 	      		} else if (unit.unitType() == UnitType.Knight) {
 	      			Knight knight = (Knight) fbp.unitHashMap.get(unit.id());
 	      			
@@ -91,7 +75,7 @@ public class FactoryUnloadingPlayer {
 	      		else if (unit.unitType() == UnitType.Ranger) {
 	      			Ranger ranger = (Ranger) fbp.unitHashMap.get(unit.id());
 	      			
-	      			/* if the knight isn't stored in the hashMap then it means
+	      			/* if the ranger isn't stored in the hashMap then it means
 	      			 * it hasn't been unloaded yet because the factory only adds 
 	      			 * a unit to the hashMap after unloading it.  Hence the loop
 	      			 * should just move on to the next unit.
@@ -124,19 +108,19 @@ public class FactoryUnloadingPlayer {
 				break;
 			// keep moving if the state last turn was move
 			case Move:
-				worker.move(Direction.East);
+				worker.move(Direction.West);
 				break;
 			// if you're done with moving or building then look at your state
 			// before last turn and decide what to do
 			case Idle:
 				// if the state before last turn was build, then move
 				if (worker.previousState == Worker.State.Build) {
-					worker.move(Direction.East);	
+					worker.move(Direction.West);	
 				// otherwise set a blueprint and begin building next turn
 				// (setting a blueprint changes the worker's state to build,
 				// so the worker will build next turn)
 				} else {
-					AbstractStructure factory = worker.setBlueprint(Direction.West, 
+					AbstractStructure factory = worker.setBlueprint(Direction.East, 
 							UnitType.Factory);
 					if (factory != null) {
 						unitHashMap.put(factory.id, factory);
@@ -170,17 +154,17 @@ public class FactoryUnloadingPlayer {
 			// tried to unload previously but still unable to unload
 			case Unload:
 				// try unloading again
-				robot = factory.unload(Direction.North);
+				robot = factory.unload(Direction.South);
 				
-				// was able to produce the knight
+				// was able to produce the robot
 				if (robot != null) {
 					unitHashMap.put(robot.id, robot);
 				}
 			case Idle:
 				if (factory.previousState == Factory.State.Produce) {
-					robot = factory.unload(Direction.North);
+					robot = factory.unload(Direction.South);
 					
-					// was able to produce the knight
+					// was able to produce the robot
 					if (robot != null) {
 						unitHashMap.put(robot.id, robot);
 					}
@@ -224,21 +208,21 @@ public class FactoryUnloadingPlayer {
 		int randomInt = r.nextInt(16);
 		
 		if (randomInt < 3) {
-			dir = Direction.North;
-		} else if (randomInt < 8) {
-			dir = Direction.Northeast;
-		} else if (randomInt < 10) {
-			dir = Direction.East;
-		} else if (randomInt < 11) {
-			dir = Direction.Southeast;
-		} else if (randomInt < 12) {
 			dir = Direction.South;
-		} else if (randomInt < 13) {
+		} else if (randomInt < 8) {
 			dir = Direction.Southwest;
-		} else if (randomInt < 14) {
+		} else if (randomInt < 10) {
 			dir = Direction.West;
-		} else {
+		} else if (randomInt < 11) {
 			dir = Direction.Northwest;
+		} else if (randomInt < 12) {
+			dir = Direction.North;
+		} else if (randomInt < 13) {
+			dir = Direction.Northeast;
+		} else if (randomInt < 14) {
+			dir = Direction.East;
+		} else {
+			dir = Direction.Southeast;
 		}
 		
 		return robot.move(dir);
