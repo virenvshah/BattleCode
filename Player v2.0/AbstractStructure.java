@@ -6,11 +6,11 @@ import bc.*;
  *
  */
 public abstract class AbstractStructure extends AbstractUnit{
-	public enum State {Produce, Unload, Bankrupt, Blueprint, Idle, Load, Ready};
-
+	public enum State {Produce, Unload, Bankrupt, Blueprint, Idle};
+	
 	public State state;
 	public State previousState;
-
+	
 	public MapLocation currentLocation; // the location of the structure
 	public GameController gc;
 	public Map battleMap;

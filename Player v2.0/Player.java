@@ -12,9 +12,12 @@ public class Player {
 		GameController gc = new GameController();
 		TroopManagement tm = new TroopManagement(gc);
 
+
 		gc.queueResearch(UnitType.Ranger);
 		gc.queueResearch(UnitType.Ranger);
 		gc.queueResearch(UnitType.Rocket);
+
+		ResearchInfo techCapability = gc.researchInfo();
 
 		try {
 			tm.initializeWorkers(gc);
@@ -54,7 +57,12 @@ public class Player {
 	      					break;
 	      				case Miner:
 
-	      					tm.mine(worker);
+									if (techCapability.getLevel(UnitType.Rocket)>=1.0){
+										// rockets can be built
+										tm.buildRocket(worker);
+									} else {
+										tm.mine(worker);
+									}
 	      					break;
 	      			}
 	      		} else if (unit.type == UnitType.Factory) {

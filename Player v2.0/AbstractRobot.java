@@ -12,7 +12,7 @@ public abstract class AbstractRobot extends AbstractUnit {
 	GameController gc;  // the game controller for the game
 	public MapLocation[] movePath;  // the path along which the robot must move
 	public Direction moveDirection;  // the direction along which the robot must move
-	int moveIndex;  // the index of movePath, the number of steps the robot
+	public int moveIndex;  // the index of movePath, the number of steps the robot
 						 // has already taken along the path
 	MapLocation currentLocation; // the robot's current location
 	Map battleMap;  // A grid of TileNodes representing the full map
@@ -63,7 +63,8 @@ public abstract class AbstractRobot extends AbstractUnit {
 		// check if the robot can move in that direction
 		if (!gc.canMove(id, dir)) {
 			attempts++;
-			if (attempts < 3) {
+			// number of times trying to move to a tile unsuccessfully.
+			if (attempts < 5) {
 				state = State.Move;
 				return 3;
 			} else {
@@ -75,6 +76,7 @@ public abstract class AbstractRobot extends AbstractUnit {
 			}
 		}
 		
+		moveDirection = dir;
 		gc.moveRobot(id, dir);
 		attempts = 0;
 		// set previous location's occupant to 0
@@ -159,6 +161,7 @@ public abstract class AbstractRobot extends AbstractUnit {
 		if (path.length == 0) return false;
 		
 		movePath = path;
+		moveIndex = 0;
 		return true;
 	}
 	

@@ -67,7 +67,7 @@ public class Worker extends AbstractRobot {
 	 * @return
 	 * 	A Blueprint class representing the blueprint
 	 */
-	public AbstractStructure setBlueprint(Direction dir, UnitType structureType) {
+	public Unit layBlueprint(Direction dir, UnitType structureType) {
 		previousState = state;
 		
 		// Check if the worker (occupantType) can lay the blueprint
@@ -81,19 +81,20 @@ public class Worker extends AbstractRobot {
 
 		// get the fields required to make the blueprint class
 		MapLocation blueprintLocation = currentLocation.add(dir);
-		int blueprintId = gc.senseUnitAtLocation(blueprintLocation).id();
+		Unit blueprint = gc.senseUnitAtLocation(blueprintLocation);
 		
 		// update the map about the blueprint location
-		battleMap.updateOccupant(blueprintLocation, blueprintId);
+		battleMap.updateOccupant(blueprintLocation, blueprint.id());
 
 		// update the state
 		state = State.Build;
 		
-		if (structureType == UnitType.Factory)
-			currentBlueprint = new Factory(blueprintId, gc, battleMap, blueprintLocation);
-		
 		// return the newly created blueprint class
-		return currentBlueprint;
+		return blueprint;
+	}
+	
+	public void setBlueprint(AbstractStructure blueprint) {
+		currentBlueprint = blueprint;
 	}
 	
 	/**
@@ -119,7 +120,16 @@ public class Worker extends AbstractRobot {
 	public int build() {
 		previousState = state;
 		// check to see if the worker can build
-		if (!gc.canBuild(id, currentBlueprint.id)) return 2;
+		if (!gc.canBuild(id, currentBlueprint.id)) {
+			
+			// another worker might have finished building the structure
+			if (gc.unit(currentBlueprint.id).structureIsBuilt() == 1) {
+				state = State.Idle;
+				currentBlueprint = null;
+				return 1;
+			}
+			return 2;
+		}
 		
 		gc.build(id, currentBlueprint.id);
 		

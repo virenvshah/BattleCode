@@ -26,7 +26,7 @@ public class Factory extends AbstractStructure {
 	 * 	An AbstractRobot object if unloaded successfully
 	 * 	null if unloading was not possible
 	 */
-	public AbstractRobot unload() {
+	public Unit unload() {
 		if (unloadDir == null) return null;
 		
 		previousState = state;
@@ -46,14 +46,9 @@ public class Factory extends AbstractStructure {
 		// create a robot class for the type unloaded
 		MapLocation robotLocation = currentLocation.add(unloadDir);
 		Unit robot = gc.senseUnitAtLocation(robotLocation);
+		battleMap.updateOccupant(robotLocation, robot.id());
 		
-		if (robot.unitType() == UnitType.Knight) {
-			return new Knight(robot.id(), gc, battleMap, robotLocation);
-		} else if (robot.unitType() == UnitType.Ranger) {
-			return new Ranger(robot.id(), gc, battleMap, robotLocation);
-		}
-		
-		return null;
+		return robot;
 	}
 	
 	/**
