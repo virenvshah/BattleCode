@@ -12,9 +12,12 @@ public class Player {
 		GameController gc = new GameController();
 		TroopManagement tm = new TroopManagement(gc);
 
+
 		gc.queueResearch(UnitType.Ranger);
 		gc.queueResearch(UnitType.Ranger);
 		gc.queueResearch(UnitType.Rocket);
+
+		ResearchInfo techCapability = gc.researchInfo();
 
 		try {
 			tm.initializeWorkers(gc);
@@ -53,13 +56,22 @@ public class Player {
 	      					tm.build(worker);
 	      					break;
 	      				case Miner:
-
-	      					tm.mine(worker);
+									if (techCapability.getLevel(UnitType.Rocket)>=1.0){
+										// rockets can be built
+										tm.buildRocket(worker);
+									} else {
+										tm.mine(worker);
+									}
 	      					break;
 	      			}
 	      		} else if (unit.type == UnitType.Factory) {
 	      			tm.produce((Factory) unit, UnitType.Ranger);
-	      		} else if (unit.type == UnitType.Knight) {
+	      		} else if (unit.type == UnitType.Rocket) {
+							Rocket rock = (Rocket) unit;
+							if (rock.state == AbstractStructure.State.Ready){
+								tm.launchRocket(rock);
+							} else if (rock.state == AbstractStructure.State.Idle)
+						} else if (unit.type == UnitType.Knight) {
 	      			tm.manageTroop((Knight) unit);
 	      		} else if (unit.type == UnitType.Ranger) {
 	      			tm.goToEnemy((Ranger) unit);

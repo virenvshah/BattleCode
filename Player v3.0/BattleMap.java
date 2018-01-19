@@ -23,6 +23,7 @@ public class BattleMap implements Map {
 	int height; // height of the map
 	int width;  // width of the map
 	Planet planet;  // Earth or Mars (Enum)
+	PlanetMap planetMap;
 		
 	// contains all Karbonite locations as Tuples (because equals exists)
 	ArrayList<Tuple> karboniteLocations;  
@@ -31,9 +32,10 @@ public class BattleMap implements Map {
 	/**
 	 * Creates a new Map
 	 */
-	public BattleMap(PlanetMap planetMap, Team ally, Team enemy, 
+	public BattleMap(PlanetMap pMap, Team ally, Team enemy, 
 			GameController g) {
 		gc = g;
+		planetMap = pMap;
 		planet = planetMap.getPlanet();
 		height = (int) planetMap.getHeight();
 		width = (int) planetMap.getWidth();
@@ -284,110 +286,16 @@ public class BattleMap implements Map {
 	 * 	The list of directions
 	 */
 	public ArrayList<Direction> getPassableDirections(MapLocation location) {
-		int j = location.getX();
-		int i = location.getY();
-		
-		TileNode tile;
 		ArrayList<Direction> directionList = new ArrayList<Direction>();
 		
-		// south
-		if (i-1 >= 0) {
-			tile = tileNodeMap[i-1][j];
-			
-			if (tile.tileType >= 0) {
-   			UnitType occupantType = getType(tile.occupantId);
-   			if (occupantType == null || (occupantType != UnitType.Worker &&
-   						occupantType != UnitType.Factory)) {
-   				directionList.add(Direction.South);
-   			}
-			}
-		}
-		// north
-		if (i+1 < height) {
-			tile = tileNodeMap[i+1][j];
-		
-			if (tile.tileType >= 0) {
-   			UnitType occupantType = getType(tile.occupantId);
-   			if (occupantType == null || (occupantType != UnitType.Worker &&
-   						occupantType != UnitType.Factory)) {
-   					directionList.add(Direction.North);
-   			}		
-			}
-		}
-		// west
-		if (j-1 >= 0) {
-			tile = tileNodeMap[i][j-1];
-		
-			if (tile.tileType >= 0) {
-   			UnitType occupantType = getType(tile.occupantId);
-   			if (occupantType == null || (occupantType != UnitType.Worker &&
-   						occupantType != UnitType.Factory)) {
-   					directionList.add(Direction.West);
-   			}
-			}
-		}
-		// east
-		if (j+1 < width) {
-			tile = tileNodeMap[i][j+1];
-		
-			if (tile.tileType >= 0) {
-   			UnitType occupantType = getType(tile.occupantId);
-   			if (occupantType == null || (occupantType != UnitType.Worker &&
-   						occupantType != UnitType.Factory)) {
-   					directionList.add(Direction.East);
-   			}
-			}
-		}
-		
-		// south-west
-		if (i-1 >= 0 && j-1 >= 0) {
-			tile = tileNodeMap[i-1][j-1];
-		
-			if (tile.tileType >= 0) {
-   			UnitType occupantType = getType(tile.occupantId);
-   			if (occupantType == null || (occupantType != UnitType.Worker &&
-   						occupantType != UnitType.Factory)) {
-   					directionList.add(Direction.Southwest);
-   			}
-			}
-		}
-				
-		// south-east
-		if (i-1 >= 0 && j+1 < width) {
-			tile = tileNodeMap[i-1][j+1];
-		
-			if (tile.tileType >= 0) {
-   			UnitType occupantType = getType(tile.occupantId);
-   			if (occupantType == null || (occupantType != UnitType.Worker &&
-   						occupantType != UnitType.Factory)) {
-   					directionList.add(Direction.Southeast);
-   			}
-			}
-		}
-		
-		// north-west
-		if (i+1 < height && j-1 >= 0) {
-			tile = tileNodeMap[i+1][j-1];
-		
-			if (tile.tileType >= 0) {
-   			UnitType occupantType = getType(tile.occupantId);
-   			if (occupantType == null || (occupantType != UnitType.Worker &&
-   						occupantType != UnitType.Factory)) {
-   					directionList.add(Direction.Northwest);
-   			}
-			}
-		}
-		
-		// north-east
-		if (i+1 < height && j+1 < width) {
-			tile = tileNodeMap[i+1][j+1];
-			
-			if (tile.tileType >= 0) {
-   			UnitType occupantType = getType(tile.occupantId);
-   			if (occupantType == null || (occupantType != UnitType.Worker &&
-   						occupantType != UnitType.Factory)) {
-   					directionList.add(Direction.Northeast);
-   			}
+		for (Direction dir : Direction.values()) {
+			MapLocation locAtDir = location.add(dir);
+
+			// the location is on the map, its passable, and has no occupant
+			if (planetMap.onMap(locAtDir) &&
+				 planetMap.isPassableTerrainAt(locAtDir) == 1 && 
+				 !gc.hasUnitAtLocation(locAtDir)) {
+				directionList.add(dir);
 			}
 		}
 		
