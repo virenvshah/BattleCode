@@ -2,14 +2,47 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c30c7adc-7f14-41e1-8d53-4bb83a9af8d5" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/snipe/AbstractRobot.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/snipe/AbstractStructure.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/snipe/AbstractUnit.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/snipe/BattleMap.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/snipe/Factory.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/snipe/Healer.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/snipe/Knight.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/snipe/Mage.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/snipe/Map.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/snipe/Player.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/snipe/Ranger.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/snipe/Rocket.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/snipe/TileNode.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/snipe/TileNodeComparator.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/snipe/TroopManagement.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/snipe/Tuple.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/snipe/Utility.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/snipe/Worker.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/snipe/run.sh" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/Player v2.05/AbstractRobot.java" afterPath="$PROJECT_DIR$/Player v2.05/AbstractRobot.java" />
-      <change beforePath="$PROJECT_DIR$/Player v2.05/AbstractStructure.java" afterPath="$PROJECT_DIR$/Player v2.05/AbstractStructure.java" />
-      <change beforePath="$PROJECT_DIR$/Player v2.05/Factory.java" afterPath="$PROJECT_DIR$/Player v2.05/Factory.java" />
-      <change beforePath="$PROJECT_DIR$/Player v2.05/Player.java" afterPath="$PROJECT_DIR$/Player v2.05/Player.java" />
-      <change beforePath="$PROJECT_DIR$/Player v2.05/Ranger.java" afterPath="$PROJECT_DIR$/Player v2.05/Ranger.java" />
-      <change beforePath="$PROJECT_DIR$/Player v2.05/Rocket.java" afterPath="$PROJECT_DIR$/Player v2.05/Rocket.java" />
-      <change beforePath="$PROJECT_DIR$/Player v2.05/TroopManagement.java" afterPath="$PROJECT_DIR$/Player v2.05/TroopManagement.java" />
+      <change beforePath="$PROJECT_DIR$/Player v2.05/AbstractRobot.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Player v2.05/AbstractStructure.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Player v2.05/AbstractUnit.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Player v2.05/BattleMap.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Player v2.05/Factory.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Player v2.05/Healer.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Player v2.05/Knight.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Player v2.05/Mage.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Player v2.05/Map.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Player v2.05/Player.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Player v2.05/Ranger.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Player v2.05/Rocket.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Player v2.05/TileNode.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Player v2.05/TileNodeComparator.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Player v2.05/Tuple.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Player v2.05/Utility.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Player v2.05/Worker.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Player v2.05/run.sh" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Player v2.4/Player.java" afterPath="$PROJECT_DIR$/Player v2.4/Player.java" />
+      <change beforePath="$PROJECT_DIR$/Player v2.4/Ranger.java" afterPath="$PROJECT_DIR$/Player v2.4/Ranger.java" />
+      <change beforePath="$PROJECT_DIR$/Player v2.4/TroopManagement.java" afterPath="$PROJECT_DIR$/Player v2.4/TroopManagement.java" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -19,32 +52,56 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="Player.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Player v2.05/Player.java">
+    <leaf>
+      <file leaf-file-name="AbstractRobot.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Player v2.4/AbstractRobot.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="528">
-              <caret line="90" column="15" lean-forward="false" selection-start-line="90" selection-start-column="15" selection-end-line="90" selection-end-column="15" />
+            <state relative-caret-position="242">
+              <caret line="11" column="31" lean-forward="false" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AbstractUnit.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Player v2.4/AbstractUnit.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="12" lean-forward="false" selection-start-line="0" selection-start-column="12" selection-end-line="0" selection-end-column="12" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Ranger.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Player v2.05/Ranger.java">
+      <file leaf-file-name="Player.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Player v2.4/Player.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="19" column="47" lean-forward="false" selection-start-line="19" selection-start-column="47" selection-end-line="19" selection-end-column="47" />
+            <state relative-caret-position="638">
+              <caret line="101" column="9" lean-forward="false" selection-start-line="101" selection-start-column="9" selection-end-line="101" selection-end-column="9" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Ranger.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Player v2.4/Ranger.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="638">
+              <caret line="29" column="25" lean-forward="false" selection-start-line="29" selection-start-column="25" selection-end-line="29" selection-end-column="25" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="TroopManagement.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Player v2.05/TroopManagement.java">
+        <entry file="file://$PROJECT_DIR$/Player v2.4/TroopManagement.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="457">
-              <caret line="396" column="29" lean-forward="false" selection-start-line="396" selection-start-column="29" selection-end-line="396" selection-end-column="29" />
+            <state relative-caret-position="401">
+              <caret line="416" column="8" lean-forward="false" selection-start-line="416" selection-start-column="8" selection-end-line="416" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -52,56 +109,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AbstractRobot.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Player v2.05/AbstractRobot.java">
+      <file leaf-file-name="run.sh" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/snipe/run.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7260">
-              <caret line="334" column="32" lean-forward="false" selection-start-line="334" selection-start-column="32" selection-end-line="334" selection-end-column="32" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Factory.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Player v2.05/Factory.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="770">
-              <caret line="65" column="0" lean-forward="false" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="BattleMap.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Player v2.05/BattleMap.java">
+        <entry file="file://$PROJECT_DIR$/Player v2.4/BattleMap.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2090">
-              <caret line="55" column="36" lean-forward="false" selection-start-line="55" selection-start-column="36" selection-end-line="55" selection-end-column="36" />
+            <state relative-caret-position="374">
+              <caret line="17" column="4" lean-forward="false" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Rocket.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Player v2.05/Rocket.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="6" column="38" lean-forward="false" selection-start-line="6" selection-start-column="38" selection-end-line="6" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AbstractStructure.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Player v2.05/AbstractStructure.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="21" column="15" lean-forward="false" selection-start-line="21" selection-start-column="15" selection-end-line="21" selection-end-column="15" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -117,6 +142,7 @@
       <find>replicate</find>
       <find>produce</find>
       <find>unload</find>
+      <find>got</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -140,6 +166,9 @@
         <option value="$PROJECT_DIR$/Player v2.05/TroopManagement.java" />
         <option value="$PROJECT_DIR$/Player v2.05/Factory.java" />
         <option value="$PROJECT_DIR$/Player v2.05/AbstractStructure.java" />
+        <option value="$PROJECT_DIR$/Player v2.4/Player.java" />
+        <option value="$PROJECT_DIR$/Player v2.4/Ranger.java" />
+        <option value="$PROJECT_DIR$/Player v2.4/TroopManagement.java" />
       </list>
     </option>
   </component>
@@ -170,7 +199,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -178,23 +206,14 @@
               <item name="BigRedBattlecode2017" type="b2602c69:ProjectViewProjectNode" />
               <item name="BigRedBattlecode2017" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="BigRedBattlecode2017" type="b2602c69:ProjectViewProjectNode" />
-              <item name="BigRedBattlecode2017" type="462c0819:PsiDirectoryNode" />
-              <item name="Player v2.0" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="BigRedBattlecode2017" type="b2602c69:ProjectViewProjectNode" />
-              <item name="BigRedBattlecode2017" type="462c0819:PsiDirectoryNode" />
-              <item name="Player v2.05" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -203,6 +222,11 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../bc18-scaffold/bc18-scaffold" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -322,12 +346,13 @@
       <workItem from="1516085215383" duration="2900000" />
       <workItem from="1516212911874" duration="1799000" />
       <workItem from="1516338374606" duration="601000" />
-      <workItem from="1516666337157" duration="18301000" />
+      <workItem from="1516666337157" duration="18664000" />
+      <workItem from="1516734162540" duration="3173000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26580000" />
+    <option name="totallyTimeSpent" value="30116000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="296" y="24" width="1849" height="1092" extended-state="6" />
@@ -335,7 +360,6 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -359,6 +383,7 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -374,63 +399,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/example_players/FactoryUnloadingPlayer2.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="19" column="30" lean-forward="true" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/example_players/UselessMovementWorker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/example_players/ReplicatingPlayer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="12" column="14" lean-forward="false" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/robots/AbstractRobot.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="572">
-          <caret line="26" column="34" lean-forward="false" selection-start-line="26" selection-start-column="34" selection-end-line="26" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/map/BattleMap.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/map/Map.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/structures/AbstractStructure.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/structures/Factory.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -589,7 +557,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="26" column="34" lean-forward="false" selection-start-line="26" selection-start-column="34" selection-end-line="26" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -597,7 +564,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
           <caret line="13" column="6" lean-forward="false" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -605,7 +571,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -613,7 +578,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="22">
           <caret line="112" column="7" lean-forward="false" selection-start-line="112" selection-start-column="7" selection-end-line="112" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -621,9 +585,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="418">
           <caret line="19" column="30" lean-forward="false" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -631,150 +592,103 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Player v2.05/run.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Player v2.05/Utility.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1452">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Player v2.05/run.sh" />
+    <entry file="file://$PROJECT_DIR$/Player v2.05/Utility.java" />
     <entry file="file://$PROJECT_DIR$/bc/MapLocation.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="484">
           <caret line="26" column="0" lean-forward="true" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#3523#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Player v2.05/BattleMap.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2090">
-          <caret line="55" column="36" lean-forward="false" selection-start-line="55" selection-start-column="36" selection-end-line="55" selection-end-column="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Player v2.05/AbstractUnit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Player v2.05/BattleMap.java" />
+    <entry file="file://$PROJECT_DIR$/Player v2.05/AbstractUnit.java" />
     <entry file="file://$PROJECT_DIR$/Player v2.0/TroopManagement.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-858">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Player v2.05/Worker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2807">
-          <caret line="106" column="23" lean-forward="false" selection-start-line="106" selection-start-column="23" selection-end-line="106" selection-end-column="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Player v2.05/Map.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="11" lean-forward="false" selection-start-line="0" selection-start-column="11" selection-end-line="0" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Player v2.05/Tuple.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="11" column="6" lean-forward="false" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Player v2.05/Rocket.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="6" column="38" lean-forward="false" selection-start-line="6" selection-start-column="38" selection-end-line="6" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Player v2.05/Player.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="90" column="15" lean-forward="false" selection-start-line="90" selection-start-column="15" selection-end-line="90" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Player v2.05/Worker.java" />
+    <entry file="file://$PROJECT_DIR$/Player v2.05/Map.java" />
+    <entry file="file://$PROJECT_DIR$/Player v2.05/Tuple.java" />
+    <entry file="file://$PROJECT_DIR$/Player v2.05/Rocket.java" />
+    <entry file="file://$PROJECT_DIR$/Player v2.05/Player.java" />
     <entry file="file://$PROJECT_DIR$/Player v2.05/TroopManagement.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="457">
           <caret line="396" column="29" lean-forward="false" selection-start-line="396" selection-start-column="29" selection-end-line="396" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Player v2.05/Factory.java" />
+    <entry file="file://$PROJECT_DIR$/Player v2.05/AbstractRobot.java" />
+    <entry file="file://$PROJECT_DIR$/Player v2.05/AbstractStructure.java" />
+    <entry file="file://$PROJECT_DIR$/Player v2.05/Ranger.java" />
+    <entry file="file://$PROJECT_DIR$/Player v2.4/AbstractRobot.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="11" column="31" lean-forward="false" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Player v2.05/Factory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="770">
-          <caret line="65" column="0" lean-forward="false" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Player v2.05/AbstractRobot.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7260">
-          <caret line="334" column="32" lean-forward="false" selection-start-line="334" selection-start-column="32" selection-end-line="334" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Player v2.05/AbstractStructure.java">
+    <entry file="file://$PROJECT_DIR$/Player v2.4/AbstractUnit.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="21" column="15" lean-forward="false" selection-start-line="21" selection-start-column="15" selection-end-line="21" selection-end-column="15" />
+          <caret line="0" column="12" lean-forward="false" selection-start-line="0" selection-start-column="12" selection-end-line="0" selection-end-column="12" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Player v2.05/Ranger.java">
+    <entry file="file://$PROJECT_DIR$/Player v2.4/BattleMap.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
-          <caret line="19" column="47" lean-forward="false" selection-start-line="19" selection-start-column="47" selection-end-line="19" selection-end-column="47" />
+          <caret line="17" column="4" lean-forward="false" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Player v2.4/Ranger.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="638">
+          <caret line="29" column="25" lean-forward="false" selection-start-line="29" selection-start-column="25" selection-end-line="29" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Player v2.4/Player.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="638">
+          <caret line="101" column="9" lean-forward="false" selection-start-line="101" selection-start-column="9" selection-end-line="101" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Player v2.4/TroopManagement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="401">
+          <caret line="416" column="8" lean-forward="false" selection-start-line="416" selection-start-column="8" selection-end-line="416" selection-end-column="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/snipe/run.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
