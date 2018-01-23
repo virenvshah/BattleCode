@@ -136,7 +136,7 @@ public class Player {
 			catch (Exception e){
 				System.out.println("Mars replication error!");
 			}
-			worker.randomMovement();
+			tm.mineMars(worker);
 		} else if (unit.type == UnitType.Rocket){
 			tm.updateWorkerAndStructure(unit);
 			Rocket rocket = (Rocket) unit;
