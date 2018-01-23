@@ -16,7 +16,10 @@ public class Player {
 
 		player.gc.queueResearch(UnitType.Ranger);
 		player.gc.queueResearch(UnitType.Ranger);
+		player.gc.queueResearch(UnitType.Healer);
 		player.gc.queueResearch(UnitType.Rocket);
+		player.gc.queueResearch(UnitType.Healer);
+		player.gc.queueResearch(UnitType.Ranger);
 
 		try {
 			player.tm.initializeWorkers(player.gc);
