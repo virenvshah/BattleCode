@@ -369,7 +369,6 @@ public abstract class AbstractRobot extends AbstractUnit {
 			
 			if (gc.canAttack(id, enemyUnit.id())) {
 				gc.attack(id, enemyUnit.id());
-				System.out.println("SUCCESSFULLY ATTACKED");
 				return 1;
 			}
 		}

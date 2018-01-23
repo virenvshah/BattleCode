@@ -14,11 +14,12 @@ import java.util.Collections;
 public class TroopManagement {
 	// Stores all the troops in a hashMap where the unitId is the key
 	HashMap<Integer, AbstractUnit> unitHashMap;
-	Map earthBattleMap;
+	Map battleMap;
 	GameController gc;
 	Random r;
 	ArrayList<Tuple> mineLocs;
 	ArrayList<Tuple> rocketLocations;
+	ArrayList<Tuple> rocketLocsOnMars;
 	HashSet<Tuple> minedOut;
 	long initialWorkers;
 	long replicateTurns = 45;
@@ -51,16 +52,17 @@ public class TroopManagement {
 		Team enemyTeam;
 		if (allyTeam == Team.Red) enemyTeam = Team.Blue;
 		else enemyTeam = Team.Red;
-		
-		earthBattleMap = new BattleMap(gc.startingMap(planet), 
+
+		battleMap = new BattleMap(gc.startingMap(planet),
 	   		allyTeam, enemyTeam, gc);
 		
-		enemyLocations = earthBattleMap.getEnemyLocations();
+		enemyLocations = battleMap.getEnemyLocations();
 		
-		mineLocs = earthBattleMap.getKarboniteLocations();
+		mineLocs = battleMap.getKarboniteLocations();
 		minedOut = new HashSet<Tuple>();
 		workersAndStructs = new ArrayList<AbstractUnit>();
 		rocketLocations = new ArrayList<Tuple>();
+		rocketLocsOnMars = new ArrayList<Tuple>();
 		workerAndStructAlive = new boolean[600];
 		wasaIndex = 0;
 	}
@@ -76,33 +78,33 @@ public class TroopManagement {
 		switch(u.unitType()) {
 			// make a worker a miner by default
 			case Worker:
-				unit = new Worker(u.id(), gc, earthBattleMap, u.location().mapLocation(), 
+				unit = new Worker(u.id(), gc, battleMap, u.location().mapLocation(),
 						mineLocs, minedOut, Worker.Occupation.Miner, unitHashMap, rocketLocations);
 				addWorkerAndStructure(unit);
 				break;
 			case Knight:
-				unit = new Knight(u.id(), gc, earthBattleMap, 
+				unit = new Knight(u.id(), gc, battleMap,
    		   		u.location().mapLocation(), unitHashMap);
 				break;
 			case Ranger:
-				unit = new Ranger(u.id(), gc, earthBattleMap, 
+				unit = new Ranger(u.id(), gc, battleMap,
    		   		u.location().mapLocation(), unitHashMap);
 				break;
 			case Mage:
-				unit = new Mage(u.id(), gc, earthBattleMap, 
+				unit = new Mage(u.id(), gc, battleMap,
    		   		u.location().mapLocation(), unitHashMap);
 				break;
 			case Healer:
-				unit = new Healer(u.id(), gc, earthBattleMap, 
+				unit = new Healer(u.id(), gc, battleMap,
    		   		u.location().mapLocation(), unitHashMap);
 				break;
 			case Factory:
-				unit = new Factory(u.id(), gc, earthBattleMap, 
+				unit = new Factory(u.id(), gc, battleMap,
    		   		u.location().mapLocation());
 				addWorkerAndStructure(unit);
 				break;
 			case Rocket:
-				unit = new Rocket(u.id(), gc, earthBattleMap, 
+				unit = new Rocket(u.id(), gc, battleMap,
    		   		u.location().mapLocation());
 				addWorkerAndStructure(unit);
 				break;
@@ -111,7 +113,46 @@ public class TroopManagement {
 		}
 		
 		unitHashMap.put(unit.id, unit);
-	}	
+	}
+
+	/**
+	 * A strategy for having rockets launch. This should theoretically be called
+	 * AFTER the rocket is fully loaded, and it looks for a valid location to
+	 * land in.
+	 * This doesn't handle rockets hitting other rockets by the way. Later on,
+	 * it would be useful to create an "lz" function for units on Mars that can
+	 * help rockets land in the right spots. Also, this function is not optimized
+	 * for travel time.
+	 */
+	public void launchRocket(Rocket rocket){
+		PlanetMap marsMap = gc.startingMap(Planet.Mars);
+		long height = marsMap.getHeight();
+		long width = marsMap.getWidth();
+		for (long i = 0;i < height;i = i + (long)1){ //unfortunately this scales badly
+			for (long j = 0;j < width;j = j + (long)3){
+				Tuple tempLZtup = new Tuple((int)i,(int)j);
+				MapLocation tempLZ = new MapLocation(Planet.Mars,(int)i,(int)j);
+				// this guarantees that the location will be on the planet
+				if (!(rocketLocsOnMars.contains(tempLZtup)))
+				{
+					rocket.setDestination(tempLZ);
+					if (rocket.launch()==1){
+						rocketLocsOnMars.add(tempLZtup);
+						Tuple currentTup = new Tuple(rocket.currentLocation.getX(),rocket.currentLocation.getY());
+						for (int k=0;k<rocketLocations.size();k++){
+							if (currentTup.equals(rocketLocations.get(k))){
+								rocketLocations.remove(k);
+								break;
+							}
+						}
+						// may consider disintegrating rockets as soon as they unload
+						// later, but for now this is good
+						return;
+					}
+				}
+			}
+		}
+	}
 	
 	public void removeUnit(int id) {
 		unitHashMap.remove(id);
@@ -125,7 +166,7 @@ public class TroopManagement {
 	 * 	The worker unit
 	 */
 	public void addBuilder(Unit u) {
-		AbstractUnit unit = new Worker(u.id(), gc, earthBattleMap, u.location().mapLocation(),
+		AbstractUnit unit = new Worker(u.id(), gc, battleMap, u.location().mapLocation(),
 				mineLocs, minedOut, Worker.Occupation.Builder, unitHashMap, rocketLocations);
 
 		addWorkerAndStructure(unit);
@@ -345,7 +386,18 @@ public class TroopManagement {
 		
 		// otherwise if the worker is a miner or an Idle Builder
 	}
-	
+
+	/**
+	 * A strategy for rocket unloading
+	 */
+	public void rocketUnload(Rocket rocket){
+		ArrayList<Direction> dirs = battleMap.getPassableDirections(
+				rocket.currentLocation);
+		if (dirs.size() > 0) {
+			rocket.setUnloadDir(Utility.getRandomDirection(dirs));
+		}
+		rocket.unload();
+	}
 	/**
 	 * A strategy for factory producing
 	 */
@@ -376,7 +428,7 @@ public class TroopManagement {
 				if (robot != null) {
 					addUnit(robot);
 				} else {
-					ArrayList<Direction> dirs = earthBattleMap.getPassableDirections(
+					ArrayList<Direction> dirs = battleMap.getPassableDirections(
 							factory.getLocation());
 					if (dirs.size() > 0) {
 						factory.setUnloadDir(Utility.getRandomDirection(dirs));
@@ -492,9 +544,9 @@ public class TroopManagement {
       	Unit u = vecUnit.get(i);
       	addBuilder(u);
       	Worker worker = (Worker) getUnit(u.id());
-      	earthBattleMap.updateOccupant(worker.getLocation(), worker.id);
+      	battleMap.updateOccupant(worker.getLocation(), worker.id);
       	
-      	ArrayList<Direction> dirs = earthBattleMap.
+      	ArrayList<Direction> dirs = battleMap.
    				getPassableDirections(worker.getLocation());
       	
       	if (dirs.size() < 2) continue;
@@ -545,14 +597,55 @@ public class TroopManagement {
    		} else {
    			addBuilder(replicatedWorker);
    		}
-   		
-   		earthBattleMap.updateOccupant(worker.currentLocation.add(dir),
+
+   		battleMap.updateOccupant(worker.currentLocation.add(dir),
    				replicatedWorker.id());
    	}
    	
    	return returnValue;
 	}
-	
+
+	/**
+	 * Replicates a worker on mars and adds the new worker to the HashMap
+	 * @param worker
+	 * 	The worker to be replicated
+	 * @return
+	 * 	-1 if its not time to replicate
+	 * 	1 if replication was successful
+	 * 	2 if replication is on cooldown
+	 * 	3 if no passable directions
+	 */
+	public int replicateWorkerMars(Worker worker) {
+
+		int returnValue;
+		ArrayList<Direction> dirs = worker.getPassableDirections();
+
+		// no passable directions
+		if (dirs.size() == 0) return 3;
+
+		Direction dir = Utility.getRandomDirection(dirs);
+
+		if ((returnValue = worker.replicate(dir)) == 1) {
+			// get the replicated worker
+			Unit replicatedWorker = gc.senseUnitAtLocation(
+					worker.currentLocation.add(dir));
+
+			// make the replicated worker's occupation opposite of the original
+			if (worker.occupation == Worker.Occupation.Builder) {
+				addUnit(replicatedWorker);
+			} else {
+				addBuilder(replicatedWorker);
+			}
+
+			battleMap.updateOccupant(worker.currentLocation.add(dir),
+					replicatedWorker.id());
+		}
+
+		return returnValue;
+	}
+
+
+
 	/**
 	 * Returns true if its time to replicate, false otherwise
 	 */
@@ -608,8 +701,8 @@ public class TroopManagement {
 			
 			// make sure no other unit came and took the place of this unit when
 			// it died, otherwise that unit would be removed from the battleMap
-			if (unit.id == earthBattleMap.getOccupantId(unit.currentLocation)) {
-				earthBattleMap.updateOccupant(unit.currentLocation, -1);
+			if (unit.id == battleMap.getOccupantId(unit.currentLocation)) {
+				battleMap.updateOccupant(unit.currentLocation, -1);
 			}
 			
 			System.out.println("Removed unit at " + unit.currentLocation);

@@ -63,10 +63,7 @@ public class Factory extends AbstractStructure {
 		return 1;
 	}
 	
-	public void setUnloadDir(Direction dir) {
-		unloadDir = dir;
-	}
-	
+
 	public MapLocation getLocation() {
 		return currentLocation;
 	}

@@ -32,7 +32,11 @@ public abstract class AbstractStructure extends AbstractUnit{
 		
 		battleMap.updateOccupant(location, i);	
 	}
-	
+
+	public void setUnloadDir(Direction dir) {
+		unloadDir = dir;
+	}
+
 	/**
 	 * Unloads a unit in a particular direction
 	 * @param dir
