@@ -8,27 +8,27 @@ import bc.*;
 public class Player {
 	GameController gc;
 	TroopManagement tm;
-	
+
 	public static void main(String args[]) {
 		Player player= new Player();
 		player.gc = new GameController();
 		player.tm = new TroopManagement(player.gc);
-		
+
 		player.gc.queueResearch(UnitType.Ranger);
 		player.gc.queueResearch(UnitType.Ranger);
 		player.gc.queueResearch(UnitType.Rocket);
-		
+
 		try {
 			player.tm.initializeWorkers(player.gc);
 		} catch (Exception e) {
    		System.out.println("Exception was thrown :(");
    		e.printStackTrace();
    	}
-		
+
 		player.gc.nextTurn();
-	   
+
 	   while (true) {
-	   	System.out.println("Current Round: " + player.gc.round() + " Time left " + 
+	   	System.out.println("Current Round: " + player.gc.round() + " Time left " +
 	   			player.gc.getTimeLeftMs());
 	   	/* if an exception occurs we don't want the program to crash because
 	   	 * we will lose the game
@@ -36,18 +36,18 @@ public class Player {
 	   	try {
 	   		// get the list of units every turn
 	   		VecUnit vecUnit = player.gc.myUnits();
-	   		
+
 	   		// iterate through the list of units
 	      	for (int i = 0; i < vecUnit.size(); i++) {
 	      		Unit u = vecUnit.get(i);
-	      		
+
 	      		AbstractUnit unit = player.tm.getUnit(u.id());
-	      		
+
 	      		if (player.gc.planet() == Planet.Earth) {
    	      		if (unit == null) {
    	      			continue;
    	      		}
-   	      	
+
       	     		if (player.gc.round() < 500) {
       	     			player.earthBattle(unit);
       	     		} else {
@@ -58,25 +58,25 @@ public class Player {
    	      			if (u.unitType() == UnitType.Rocket) {
    	      				player.tm.addUnit(u);
    	      				unit = player.tm.getUnit(u.id());
-   	      			} else { 
+   	      			} else {
    	      				continue;
    	      			}
    	      		}
-   	      		
+
    	      		player.marsBattle(unit);
    	      	}
 	      	}
-	      	
+
 	      	player.tm.removeDeadWorkersAndStructures();
 	   	} catch (Exception e) {
 	   		System.out.println("Exception was thrown :(");
 	   		e.printStackTrace();
 	   	}
-	   	
+
 	   	player.gc.nextTurn();
 	   }
 	}
-	
+
 	/**
 	 * Troop management for the initial stages of the game
 	 * @param unit
@@ -96,7 +96,9 @@ public class Player {
 			tm.goToEnemy((Ranger) unit);
 		}
 	}
-	
+
+
+
 	/**
 	 * Troop management to leave Earth
 	 * @param unit
@@ -121,7 +123,7 @@ public class Player {
 			}
 		}
 	}
-	
+
 	public void marsBattle(AbstractUnit unit){
 		System.out.println("Hi I'm in Mars Battle");
 		// check unit type
@@ -148,5 +150,3 @@ public class Player {
 		}
 	}
 }
-
-
