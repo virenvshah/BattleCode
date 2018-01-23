@@ -15,4 +15,12 @@ public class Ranger extends AbstractRobot {
 		previousState = State.Idle;
 		state = State.Idle;
 	}
+
+	/**
+	 * Attacks if possible, then randomly moves
+	 */
+	public void randomMovementAndAttack(){
+		attack();
+		randomMovement();
+	}
 }

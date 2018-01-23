@@ -19,24 +19,7 @@ public class FactoryUnloadingPlayer {
 		
 		// get the team colors
 		Team allyTeam = fbp.gc.team();
-		Team enemyTeam;
-		if (allyTeam == Team.Red) enemyTeam = Team.Blue;
-		else enemyTeam = Team.Red;
-		
-		
-		// get the API specific planet Map
-	   PlanetMap earthPlanetMap = fbp.gc.startingMap(Planet.Earth);
-	   
-	   // make our own map from the API specific map
-	   fbp.earthBattleMap = new BattleMap(earthPlanetMap, 
-	   		allyTeam, enemyTeam);
-	   
-	   // create the hashMap where all the units are stored
-	   fbp.unitHashMap = new HashMap<Integer, AbstractUnit>();
-	   
-	   
-	   while (true) {
-	   	System.out.println("Current Round: " + fbp.gc.round());
+		System.out.println("Current Round: " + fbp.gc.round());
 	   	/* if an exception occurs we don't want the program to crash because
 	   	 * we will lose the game
 	   	 */

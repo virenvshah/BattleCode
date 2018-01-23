@@ -5,6 +5,7 @@ import bc.*;
  * @author virsain
  */
 public class Factory extends AbstractStructure {
+	Direction unloadDir;
 	
 	/**
 	 * Creates a new Factory
@@ -17,6 +18,38 @@ public class Factory extends AbstractStructure {
 		previousState = State.Blueprint;
 	}
 	
+	/**
+	 * Unloads a unit in a particular direction
+	 * @param dir
+	 * 	The direction to unload the unit
+	 * @return
+	 * 	An AbstractRobot object if unloaded successfully
+	 * 	null if unloading was not possible
+	 */
+	public Unit unload() {
+		if (unloadDir == null) return null;
+		
+		previousState = state;
+		
+		// check if factory can unload
+		if (!gc.canUnload(id, unloadDir)) {
+			state = State.Unload;
+			return null;
+		}
+		
+		System.out.println("unloading");
+		gc.unload(id, unloadDir);
+		
+		// update the factory state
+		state = State.Idle;
+		
+		// create a robot class for the type unloaded
+		MapLocation robotLocation = currentLocation.add(unloadDir);
+		Unit robot = gc.senseUnitAtLocation(robotLocation);
+		battleMap.updateOccupant(robotLocation, robot.id());
+		
+		return robot;
+	}
 	
 	/**
 	 * Produces a unit of a particular type
@@ -30,6 +63,7 @@ public class Factory extends AbstractStructure {
 	 * 	3 if already producing something
 	 */
 	public int produce(UnitType unitType) {
+		System.out.println("Amount of Karbonite " + gc.karbonite());
 		previousState = state;
 		
 		// check to see if the factory is built
@@ -63,7 +97,10 @@ public class Factory extends AbstractStructure {
 		return 1;
 	}
 	
-
+	public void setUnloadDir(Direction dir) {
+		unloadDir = dir;
+	}
+	
 	public MapLocation getLocation() {
 		return currentLocation;
 	}

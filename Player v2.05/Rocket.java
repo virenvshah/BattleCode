@@ -33,4 +33,6 @@ public class Rocket extends AbstractStructure {
 	public int numOfGarrisonUnits() {
 		return (int) gc.unit(id).structureGarrison().size();
 	}
+
+	public boolean atMaxCap(){return (gc.unit(id).structureGarrison().size()==gc.unit(id).structureMaxCapacity());}
 }
