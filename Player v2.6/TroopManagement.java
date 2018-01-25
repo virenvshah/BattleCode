@@ -402,40 +402,50 @@ public class TroopManagement {
 		// if the robot attacked, it shouldn't move because it can keep attacking 
 		// next turn
 		robot.attack();
-			
+
 		// first try moving toward the rocket
 		if (robot.movePath != null) {
 			// try moving
 			int returnValue = robot.movePath(false);
-			
+
 			// if an obstacle is met
-			if (returnValue == 4) {
-				// check if the obstacle is an unbuilt factory (or if there
-				// are any unbuilt factories nearby)
-				Unit unit = gc.senseUnitAtLocation(robot.currentLocation.
-						add(robot.moveDirection));
-				
-				if (unit.unitType() == UnitType.Rocket) {
-					robot.load(unit.id());
+				if (returnValue == 4) {
+					// check if the obstacle is an unbuilt factory (or if there
+					// are any unbuilt factories nearby)
+					Unit unit = gc.senseUnitAtLocation(robot.currentLocation.
+							add(robot.moveDirection));
+
+					if (unit.unitType() == UnitType.Rocket) {
+						robot.load(unit.id());
+					}
 				}
-			}
-		
-		// robot.movePath == null, try setting a path, otherwise move randomly
+
+
+			// robot.movePath == null, try setting a path, otherwise move randomly
 		} else {
-			if (rocketLocations.size() > 0) {
-				Tuple d = robot.getClosestLocation(rocketLocations, robot.currentLocation);
-				MapLocation dest = new MapLocation(planet, d.x, d.y);
-						
-   			if (robot.setPath(robot.currentLocation, dest)) {
-   				robot.movePath(false);
-   				return;
-   			}
-			}
-			
-			robot.randomMovement();
+				if (rocketLocations.size() > 0){
+					System.out.println("We think we're at: "+robot.currentLocation);
+					System.out.println("We're actually at: "+gc.unit(robot.id).location());
+					System.out.println((robot.currentLocation.getX()==gc.unit(robot.id).location().mapLocation().getX())
+										&& (robot.currentLocation.getY()==gc.unit(robot.id).location().mapLocation().getY()));
+					//try{
+						Tuple d = robot.getClosestLocation(rocketLocations, robot.currentLocation);
+						MapLocation dest = new MapLocation(planet, d.x, d.y);
+
+						if (robot.setPath(robot.currentLocation, dest)) {
+							robot.movePath(false);
+							return;
+						}
+				//	} catch (Exception e){System.out.println("LOCATION 1.5");}
+						robot.randomMovement();
+						robot.resetPath();
+
+				//	}
 		}
 	}
-	
+	}
+
+
 	public void initializeWorkers(GameController gc) {
    	// get the list of workers
    	VecUnit vecUnit = gc.myUnits();

@@ -20,7 +20,6 @@ public class BattleMap implements Map {
 	public Team enemyTeamColor;
 	public ArrayList<MapLocation> allyStartLocations;
 	public ArrayList<MapLocation> enemyStartLocations;
-	public ArrayList<MapLocation> snipelocations
 	
 	public HashMap<Tuple, MapLocation[]> pathHashMap;
 	

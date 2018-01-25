@@ -342,7 +342,7 @@ public class TroopManagement {
 
 	}
 
-	/**
+	/**i
 	 * A strategy for factory producing
 	 */
 	public void produce(Factory factory, UnitType type) {

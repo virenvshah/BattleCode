@@ -9,19 +9,18 @@ public class Player {
 	GameController gc;
 	TroopManagement tm;
 	UnitCounter uc;
-	
+
 	public static void main(String args[]) {
 		Player player= new Player();
 		player.gc = new GameController();
 		player.uc = new UnitCounter();
 		player.tm = new TroopManagement(player.gc, player.uc);
-		
+
 		player.gc.queueResearch(UnitType.Ranger);
 		player.gc.queueResearch(UnitType.Ranger);
 		player.gc.queueResearch(UnitType.Healer);
 		player.gc.queueResearch(UnitType.Healer);
 		player.gc.queueResearch(UnitType.Rocket);
-
 
 		try {
 			player.tm.initializeWorkers(player.gc);
@@ -29,11 +28,12 @@ public class Player {
    		System.out.println("Exception was thrown :(");
    		e.printStackTrace();
    	}
-		
+
 		player.gc.nextTurn();
-	   
+
 	   while (true) {
-	   	System.out.println("Current Round: " + player.gc.round() + " Time left " + 
+	   	int step = (int) player.gc.round();
+	   	System.out.println("Current Round: " + step + " Time left " +
 	   			player.gc.getTimeLeftMs());
 	   	/* if an exception occurs we don't want the program to crash because
 	   	 * we will lose the game
@@ -41,50 +41,61 @@ public class Player {
 	   	try {
 	   		// get the list of units every turn
 	   		VecUnit vecUnit = player.gc.myUnits();
-	   		
+
 	   		// iterate through the list of units
 	      	for (int i = 0; i < vecUnit.size(); i++) {
 	      		Unit u = vecUnit.get(i);
-	      		
+
 	      		AbstractUnit unit = player.tm.getUnit(u.id());
-	      		
+
 	      		if (player.gc.planet() == Planet.Earth) {
    	      		if (unit == null) {
    	      			continue;
    	      		}
-   	      	
-      	     		if (player.gc.round() < 400) {
-      	     			player.earthBattle(unit);
-      	     		} else if (player.gc.round() < 500){
-      	     			player.buildRockets(unit);
-      	     		} else {	
-      	     			player.evacuate(unit);
-      	     		}
-   	      	} else {
+                    if (step < 380) {
+                        player.earthBattle(unit);
+                    }
+                    else if (step < 450) {
+                        player.buildRockets(unit);
+                    }
+                    else if (step < 650){
+                        if(((AbstractRobot)unit).state  == AbstractRobot.State.Spawn) {
+                            player.evacuate(unit);
+                        }
+                        else{ player.buildRockets(unit);}
+                    }
+                    else {
+                        try {
+                            player.gc.unit(u.id());
+                        } catch(Exception e) {
+                            System.out.println("Unit died");
+                            continue;
+                        }
+                        player.evacuate(unit);
+                    }
+   	      		} else {
    	      		if (unit == null) {
    	      			if (u.unitType() == UnitType.Rocket) {
    	      				player.tm.addUnit(u);
    	      				unit = player.tm.getUnit(u.id());
-   	      			} else { 
+   	      			} else {
    	      				continue;
    	      			}
    	      		}
-   	      		
    	      		player.marsBattle(unit);
-   	      	}
+   	      		}
 	      	}
-	      	
 	      	player.tm.removeDeadWorkersAndStructures();
 	      	player.uc.resetCount();
 	   	} catch (Exception e) {
 	   		System.out.println("Exception was thrown :(");
 	   		e.printStackTrace();
 	   	}
-	   	
+
 	   	player.gc.nextTurn();
 	   }
 	}
-	
+
 	/**
 	 * Troop management for the initial stages of the game
 	 * @param unit
@@ -108,7 +119,7 @@ public class Player {
 			tm.goToEnemy((Ranger) unit);
 		}
 	}
-	
+
 	public void buildRockets(AbstractUnit unit) {
 		if (unit.type == UnitType.Worker) {
 			uc.workC++;
@@ -132,7 +143,52 @@ public class Player {
 			}
 		}
 	}
-	
+
+	/**
+	 * Decides whether the unit is carrying out earth battle or staggering and evacuating
+	 * @param Unit
+	 * 	Unit for operation to be carried out on
+	 * @param step
+	 * 	Current timeStep
+	 */
+//	public void stagger(AbstractUnit unit, int step){
+//		if (step < 380) {
+//			player.earthBattle(unit);
+//		}
+//		else if (step < 450) {
+//			player.buildRockets(unit);
+//		}
+//		else if (step < 650){
+//			if(((AbstractRobot)unit).state  == Abstract.State.Spawn) {
+//				player.evacuate(unit);
+//			}
+//			else{ player.buildRockets(unit);}
+//		}
+//		else {
+//			try {
+//				player.gc.unit(u.id());
+//			} catch(Exception e) {
+//				System.out.println("Unit died");
+//				continue;
+//			}
+//			player.evacuate(unit);
+//		}
+//	}
+
+//	/**
+//	 *
+//	 * @param Unit
+//	 * 	the unit to be staggered
+//	 */
+//	public void staggerAndEvacuate(AbstractUnit Unit){
+//		try{
+//
+//
+//		} catch (Exception e){
+//			System.out.println("Unit died");
+//		}
+//		return;
+//	}
 	/**
 	 * Troop management to leave Earth
 	 * @param unit
@@ -158,7 +214,7 @@ public class Player {
 			}
 		}
 	}
-	
+
 	public void marsBattle(AbstractUnit unit){
 		// check unit type
 		if (unit.type == UnitType.Worker){
@@ -170,7 +226,7 @@ public class Player {
 			catch (Exception e){
 				System.out.println("Mars replication error!");
 			}
-			worker.randomMovement();
+			tm.mineMars(worker);
 		} else if (unit.type == UnitType.Rocket){
 			tm.updateWorkerAndStructure(unit);
 			Rocket rocket = (Rocket) unit;
@@ -184,5 +240,3 @@ public class Player {
 		}
 	}
 }
-
-
